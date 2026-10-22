@@ -1,0 +1,17 @@
+{
+  "name": "CURADET",
+  "short_name": "CURADET",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080a0d",
+  "theme_color": "#080a0d",
+  "description": "CURADET — müzik, teknoloji ve yaratıcı üretimi bir araya getiren bağımsız yapı.",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
