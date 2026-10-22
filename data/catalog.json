@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "currencyPolicy": "TBD",
+  "deliveryPolicy": {
+    "preview": "optimized-preview",
+    "master": "original-lossless",
+    "publicMasterLinks": false
+  },
+  "tracks": []
+}
