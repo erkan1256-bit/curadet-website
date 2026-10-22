@@ -1,0 +1,22 @@
+# CURADET Center Mail Deployment Checklist
+
+- [x] IMAP/SMTP provider settings verified from Spacemail documentation
+- [x] Server-side connector code implemented
+- [x] Three mailbox mappings implemented
+- [x] Inbox listing implemented
+- [x] Message reading implemented
+- [x] Sending implemented
+- [x] API authentication token required
+- [x] Secrets excluded from repository
+- [x] Security boundary documented
+- [ ] Private server runtime selected and provisioned
+- [ ] Secrets installed in server-side secret storage
+- [ ] CURADET Center user authentication/session layer connected
+- [ ] HTTPS reverse proxy configured
+- [ ] Real IMAP login test completed for all three mailboxes
+- [ ] Real inbox synchronization validated
+- [ ] Real SMTP send test validated through bridge
+- [ ] Audit logging validated
+- [ ] Backup/recovery procedure tested
+- [ ] Security review completed
+- [ ] Production merge approved by 00 — CURADET MERKEZ
