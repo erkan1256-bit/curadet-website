@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 96" role="img" aria-labelledby="title desc">
+  <title id="title">CURADET</title>
+  <desc id="desc">CURADET özgün akış simgesi ve kelime işareti</desc>
+  <defs>
+    <linearGradient id="flowA" x1="16" y1="78" x2="82" y2="14" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#25D4C6"/>
+      <stop offset="1" stop-color="#6A5CFF"/>
+    </linearGradient>
+    <linearGradient id="flowB" x1="18" y1="22" x2="79" y2="74" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F0C978"/>
+      <stop offset="1" stop-color="#D5A450"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(8 8)">
+    <path d="M65 14C54 6 39 4 27 10 13 17 6 31 8 46c2 17 15 30 32 33 12 2 24-2 33-10" fill="none" stroke="url(#flowA)" stroke-width="11" stroke-linecap="round"/>
+    <path d="M67 25c-8-7-19-10-29-7-12 3-20 13-20 25 0 13 10 24 23 26 10 2 20-2 27-9" fill="none" stroke="#F4F7F8" stroke-opacity=".96" stroke-width="7" stroke-linecap="round"/>
+    <path d="M17 61c12 2 22 0 31-6 10-7 16-18 18-33" fill="none" stroke="url(#flowB)" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <text x="108" y="57" fill="#F4F7F8" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="37" font-weight="700" letter-spacing="7">CURADET</text>
+  <text x="110" y="76" fill="#9CAAB1" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="8" font-weight="700" letter-spacing="3.2">MUSIC · RIGHTS · TECHNOLOGY</text>
+</svg>
