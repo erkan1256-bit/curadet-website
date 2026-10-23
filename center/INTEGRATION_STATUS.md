@@ -1,41 +1,31 @@
-# CURADET Center — Mail Integration Status
+# CURADET Center — Integration Status
 
-## Completed in prototype branch
-
-- CURADET Center communication UI prototype
-- Server-side Spacemail IMAP connector
-- Server-side Spacemail SMTP sender
-- Mailbox mapping:
-  - info@curadet.com → 00 — CURADET MERKEZ
-  - sync@curadet.com → 05 — Sync & B2B
-  - rights@curadet.com → 04 — Haklar & Dağıtım
-- Authenticated private API surface
-- Input validation for mailbox id, inbox limit, message UID and send payload
-- Secret boundary: real credentials excluded from Git repository
-- Automated unit tests
-- Secret-handling safety tests
-- Dependency/module smoke tests
-- GitHub Actions CI
-- Production Docker image definition
+## Status
+READY FOR PRIVATE RUNTIME DEPLOYMENT / REAL CREDENTIAL VERIFICATION
 
 ## Verified
+- Spacemail integration architecture is IMAP/SMTP based.
+- Three mailbox mappings exist: info, sync, rights.
+- Inbox listing, message reading and SMTP send modules are implemented.
+- API is protected with bearer-token authentication.
+- Input validation is covered by automated tests.
+- Real `.env`, credentials and logs are excluded by repository rules/tests.
+- Runtime security headers and in-memory API rate limiting are enabled.
+- `/health` liveness endpoint exists.
+- `/ready` verifies required runtime configuration is present without exposing secret values.
+- Docker image builds successfully in GitHub Actions.
+- Container binds correctly for Docker runtime while Compose publishes only to host loopback by default.
+- Real container smoke test passes for `/health`, `/ready`, unauthorized `401`, and authorized `200` API access.
+- Provider-neutral `docker-compose.yml` is available.
 
-- Local validation/security tests: 7/7 passed
-- GitHub Actions dependency installation: passed
-- GitHub Actions test suite: passed
-- Spacemail connector module load: passed
-- Production Docker container build: passed
+## Not yet verified
+- Real IMAP authentication against info@curadet.com.
+- Real IMAP authentication against sync@curadet.com.
+- Real IMAP authentication against rights@curadet.com.
+- CURADET Center reading real inbox data through the bridge.
+- Real message body retrieval through the bridge.
+- Real SMTP sending through the bridge.
+- Production TLS/reverse proxy and final private runtime deployment.
 
-## Not yet verified in real runtime
-
-- Login to the three real Spacemail mailboxes through the connector
-- Reading a real inbox through CURADET Center
-- Reading a real message through CURADET Center
-- Sending a real message through CURADET Center SMTP bridge
-- Private server deployment and TLS/reverse-proxy configuration
-
-## Required owner-side action before live verification
-
-A private runtime must exist and the three mailbox credentials plus a generated CURADET_CENTER_TOKEN must be entered there securely. Credentials must never be sent through chat or committed to GitHub.
-
-Status: READY FOR PRIVATE RUNTIME DEPLOYMENT / REAL CREDENTIAL VERIFICATION.
+## Owner boundary
+A recurring-cost/private runtime must be selected and approved before deployment. Real mailbox passwords and CURADET_CENTER_TOKEN must be entered directly into that runtime's secret manager by the owner and must never be pasted into chat, GitHub, frontend source, or application logs.
