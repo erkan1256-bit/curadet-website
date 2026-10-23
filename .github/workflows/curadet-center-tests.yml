@@ -34,3 +34,20 @@ jobs:
         run: npm test
       - name: Build production container
         run: docker build -t curadet-center-mail-bridge:test .
+      - name: Run production container smoke test
+        run: |
+          docker run -d --rm --name curadet-center-test -p 8787:8787 \
+            -e CURADET_CENTER_TOKEN=test-token-not-production \
+            -e INFO_EMAIL=info@curadet.com -e INFO_PASSWORD=dummy \
+            -e SYNC_EMAIL=sync@curadet.com -e SYNC_PASSWORD=dummy \
+            -e RIGHTS_EMAIL=rights@curadet.com -e RIGHTS_PASSWORD=dummy \
+            curadet-center-mail-bridge:test
+          trap 'docker stop curadet-center-test >/dev/null 2>&1 || true' EXIT
+          for i in {1..20}; do
+            if curl -fsS http://127.0.0.1:8787/health >/dev/null; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:8787/health | grep '"ok":true'
+          curl -fsS http://127.0.0.1:8787/ready | grep '"ok":true'
+          test "$(curl -sS -o /dev/null -w '%{http_code}' http://127.0.0.1:8787/api/mailboxes)" = "401"
+          test "$(curl -sS -o /dev/null -w '%{http_code}' -H 'Authorization: Bearer test-token-not-production' http://127.0.0.1:8787/api/mailboxes)" = "200"
