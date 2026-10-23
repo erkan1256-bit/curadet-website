@@ -1,0 +1,16 @@
+{
+  "name": "curadet-center-mail-bridge",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "imapflow": "^1.0.191",
+    "mailparser": "^3.7.4",
+    "nodemailer": "^7.0.6"
+  }
+}
