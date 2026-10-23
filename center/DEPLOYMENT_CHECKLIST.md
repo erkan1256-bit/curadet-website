@@ -9,25 +9,36 @@
 - [x] Automated tests added
 - [x] GitHub Actions CI added
 - [x] Production Dockerfile added
+- [x] Provider-neutral Docker Compose added
+- [x] Runtime security headers added
+- [x] API rate limiting added
+- [x] `/health` endpoint added
+- [x] `/ready` endpoint added
 - [x] CI test suite passed
 - [x] CI production container build passed
+- [x] Real container runtime smoke test passed
+- [x] Unauthorized API request returns 401
+- [x] Authorized API request returns 200
 
-## Private runtime requirements
+## Owner approval required
 
-- [ ] Choose/provision a private server or container runtime
-- [ ] Configure TLS/reverse proxy
-- [ ] Generate a long random CURADET_CENTER_TOKEN on the server
-- [ ] Enter INFO_EMAIL and INFO_PASSWORD directly on the server
-- [ ] Enter SYNC_EMAIL and SYNC_PASSWORD directly on the server
-- [ ] Enter RIGHTS_EMAIL and RIGHTS_PASSWORD directly on the server
+- [ ] Choose/approve a recurring-cost private server or container runtime
+- [ ] Create/sign in to provider account if required
+- [ ] Configure TLS/reverse proxy or provider-managed HTTPS
+- [ ] Generate a long random CURADET_CENTER_TOKEN inside the selected runtime
+- [ ] Enter INFO_EMAIL and INFO_PASSWORD directly into runtime secrets
+- [ ] Enter SYNC_EMAIL and SYNC_PASSWORD directly into runtime secrets
+- [ ] Enter RIGHTS_EMAIL and RIGHTS_PASSWORD directly into runtime secrets
 - [ ] Never paste mailbox passwords, 2FA codes or recovery codes into chat, GitHub, frontend code or logs
 
 ## Real verification after credentials are entered
 
-- [ ] Health endpoint returns OK
-- [ ] info inbox can be listed
-- [ ] sync inbox can be listed
-- [ ] rights inbox can be listed
+- [ ] Real info IMAP login succeeds
+- [ ] Real sync IMAP login succeeds
+- [ ] Real rights IMAP login succeeds
+- [ ] info inbox can be listed through CURADET Center
+- [ ] sync inbox can be listed through CURADET Center
+- [ ] rights inbox can be listed through CURADET Center
 - [ ] One test message can be read per mailbox
 - [ ] One controlled test email can be sent per mailbox
 - [ ] Logs contain no credentials or message bodies by default
