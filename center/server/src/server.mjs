@@ -8,8 +8,13 @@ app.disable('x-powered-by');
 app.use(express.json({ limit: '256kb' }));
 
 const PORT = Number(process.env.PORT || 8787);
+const HOST = process.env.BIND_HOST || '127.0.0.1';
 const TOKEN = process.env.CURADET_CENTER_TOKEN;
 if (!TOKEN) throw new Error('CURADET_CENTER_TOKEN is required');
+
+const WINDOW_MS = Number(process.env.RATE_LIMIT_WINDOW_MS || 60000);
+const MAX_REQUESTS = Number(process.env.RATE_LIMIT_MAX || 120);
+const buckets = new Map();
 
 function timingSafeEqualText(a, b) {
   const aa = Buffer.from(String(a));
@@ -27,11 +32,43 @@ function requireAuth(req, res, next) {
   next();
 }
 
+function rateLimit(req, res, next) {
+  const now = Date.now();
+  const key = req.ip || 'unknown';
+  const current = buckets.get(key);
+  if (!current || now - current.startedAt >= WINDOW_MS) {
+    buckets.set(key, { startedAt: now, count: 1 });
+    return next();
+  }
+  current.count += 1;
+  if (current.count > MAX_REQUESTS) {
+    const retryAfter = Math.max(1, Math.ceil((WINDOW_MS - (now - current.startedAt)) / 1000));
+    res.set('Retry-After', String(retryAfter));
+    return res.status(429).json({ error: 'rate_limited' });
+  }
+  next();
+}
+
+app.use((_req, res, next) => {
+  res.set('Cache-Control', 'no-store');
+  res.set('X-Content-Type-Options', 'nosniff');
+  res.set('X-Frame-Options', 'DENY');
+  res.set('Referrer-Policy', 'no-referrer');
+  next();
+});
+
 app.get('/health', (_req, res) => {
   res.json({ ok: true, service: 'curadet-center-mail-bridge' });
 });
 
-app.use('/api', requireAuth);
+app.get('/ready', (_req, res) => {
+  const required = ['INFO_EMAIL', 'INFO_PASSWORD', 'SYNC_EMAIL', 'SYNC_PASSWORD', 'RIGHTS_EMAIL', 'RIGHTS_PASSWORD'];
+  const missing = required.filter(name => !process.env[name]);
+  if (missing.length) return res.status(503).json({ ok: false, error: 'missing_runtime_configuration' });
+  res.json({ ok: true, service: 'curadet-center-mail-bridge' });
+});
+
+app.use('/api', rateLimit, requireAuth);
 
 app.get('/api/mailboxes', (_req, res) => {
   res.json([
@@ -79,6 +116,6 @@ app.post('/api/:account/send', async (req, res) => {
   }
 });
 
-app.listen(PORT, '127.0.0.1', () => {
-  console.log(`CURADET Center mail bridge listening on 127.0.0.1:${PORT}`);
+app.listen(PORT, HOST, () => {
+  console.log(`CURADET Center mail bridge listening on ${HOST}:${PORT}`);
 });
