@@ -1,6 +1,7 @@
 import express from 'express';
 import crypto from 'node:crypto';
 import { listInbox, readMessage, sendMail } from './spacemail.mjs';
+import { validAccount, normalizeLimit, normalizeUid, validSendPayload } from './validation.mjs';
 
 const app = express();
 app.disable('x-powered-by');
@@ -26,10 +27,6 @@ function requireAuth(req, res, next) {
   next();
 }
 
-function validAccount(value) {
-  return ['info', 'sync', 'rights'].includes(value);
-}
-
 app.get('/health', (_req, res) => {
   res.json({ ok: true, service: 'curadet-center-mail-bridge' });
 });
@@ -47,7 +44,7 @@ app.get('/api/mailboxes', (_req, res) => {
 app.get('/api/:account/inbox', async (req, res) => {
   if (!validAccount(req.params.account)) return res.status(404).json({ error: 'unknown_mailbox' });
   try {
-    const limit = Math.min(Math.max(Number(req.query.limit || 25), 1), 100);
+    const limit = normalizeLimit(req.query.limit);
     res.json(await listInbox(req.params.account, limit));
   } catch (error) {
     console.error('Inbox error:', error.message);
@@ -57,8 +54,8 @@ app.get('/api/:account/inbox', async (req, res) => {
 
 app.get('/api/:account/message/:uid', async (req, res) => {
   if (!validAccount(req.params.account)) return res.status(404).json({ error: 'unknown_mailbox' });
-  const uid = Number(req.params.uid);
-  if (!Number.isInteger(uid) || uid < 1) return res.status(400).json({ error: 'invalid_uid' });
+  const uid = normalizeUid(req.params.uid);
+  if (!uid) return res.status(400).json({ error: 'invalid_uid' });
   try {
     const message = await readMessage(req.params.account, uid);
     if (!message) return res.status(404).json({ error: 'message_not_found' });
@@ -71,10 +68,10 @@ app.get('/api/:account/message/:uid', async (req, res) => {
 
 app.post('/api/:account/send', async (req, res) => {
   if (!validAccount(req.params.account)) return res.status(404).json({ error: 'unknown_mailbox' });
-  const { to, subject, text, html } = req.body || {};
-  if (!to || !subject || (!text && !html)) return res.status(400).json({ error: 'missing_fields' });
+  if (!validSendPayload(req.body)) return res.status(400).json({ error: 'missing_fields' });
+  const { to, subject, text, html } = req.body;
   try {
-    const result = await sendMail(req.params.account, { to, subject, text, html });
+    const result = await sendMail(req.params.account, { to: to.trim(), subject: subject.trim(), text, html });
     res.status(202).json(result);
   } catch (error) {
     console.error('Send error:', error.message);
