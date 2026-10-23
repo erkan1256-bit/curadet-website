@@ -1,0 +1,1 @@
+CURADET ana sayfa görsel referansı kullanıcı tarafından 23 Ekim 2026 tarihinde kilitlendi. Ana sayfa; koyu sinematik hero, dört hizmet kartı, açık renk global vizyon alanı ve koyu kurumsal footer yapısını izler. Mevcut CURADET logosu korunur. Bu dosya tasarım kararının kaydıdır.
