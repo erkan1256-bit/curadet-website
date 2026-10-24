@@ -1,0 +1,122 @@
+openapi: 3.1.0
+info:
+  title: CURADET Platform API
+  version: 0.1.0
+  description: Contract for identity, Music World, catalog, orders, payments, licenses, exclusive locks, private projects and secure deliveries.
+servers:
+  - url: https://api.curadet.com/v1
+security:
+  - bearerAuth: []
+paths:
+  /me:
+    get:
+      summary: Current customer profile and Music World summary
+      responses:
+        '200': {description: Profile}
+  /catalog:
+    get:
+      security: []
+      summary: Public licensable catalog
+      parameters:
+        - {name: q, in: query, schema: {type: string}}
+        - {name: genre, in: query, schema: {type: string}}
+        - {name: mood, in: query, schema: {type: string}}
+        - {name: bpm_min, in: query, schema: {type: integer}}
+        - {name: bpm_max, in: query, schema: {type: integer}}
+      responses:
+        '200': {description: Catalog results}
+  /projects:
+    post:
+      summary: Create a private music project/brief
+      responses:
+        '201': {description: Project created}
+    get:
+      summary: List current customer's private projects
+      responses:
+        '200': {description: Projects}
+  /orders:
+    post:
+      summary: Create order from catalog license or approved private project
+      responses:
+        '201': {description: Order created}
+    get:
+      summary: List customer orders
+      responses:
+        '200': {description: Orders}
+  /orders/{orderId}:
+    get:
+      summary: Read one authorized order
+      parameters:
+        - {name: orderId, in: path, required: true, schema: {type: string, format: uuid}}
+      responses:
+        '200': {description: Order}
+        '404': {description: Not found}
+  /orders/{orderId}/payment-intent:
+    post:
+      summary: Create idempotent payment intent for an authorized order
+      parameters:
+        - {name: orderId, in: path, required: true, schema: {type: string, format: uuid}}
+      responses:
+        '200': {description: Payment intent created}
+  /licenses:
+    get:
+      summary: List customer licenses and signed contract records
+      responses:
+        '200': {description: Licenses}
+  /licenses/{licenseId}/accept:
+    post:
+      summary: Accept exact immutable license/contract version
+      parameters:
+        - {name: licenseId, in: path, required: true, schema: {type: string, format: uuid}}
+      responses:
+        '200': {description: Acceptance recorded}
+  /vault:
+    get:
+      summary: List authorized private-vault assets without permanent public URLs
+      responses:
+        '200': {description: Vault assets}
+  /vault/{assetId}/download:
+    post:
+      summary: Issue short-lived signed download only when entitlement is active
+      parameters:
+        - {name: assetId, in: path, required: true, schema: {type: string, format: uuid}}
+      responses:
+        '200': {description: Expiring signed download URL}
+        '403': {description: No active entitlement}
+  /exclusive-locks:
+    get:
+      summary: List customer's protected exclusive works
+      responses:
+        '200': {description: Protected works}
+  /exclusive-locks/{workId}/status:
+    get:
+      summary: Read protection state for an authorized work
+      parameters:
+        - {name: workId, in: path, required: true, schema: {type: string, format: uuid}}
+      responses:
+        '200': {description: Exclusive protection status}
+  /webhooks/payment:
+    post:
+      security: []
+      summary: Payment-provider webhook; signature verification required
+      responses:
+        '204': {description: Processed idempotently}
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    OrderState:
+      type: string
+      enum: [DRAFT, AWAITING_CONTRACT, AWAITING_PAYMENT, PAID, IN_PRODUCTION, READY, DELIVERED, COMPLETED, CANCELLED, REFUNDED, DISPUTED]
+    LicenseState:
+      type: string
+      enum: [DRAFT, APPROVED, ACTIVE, EXPIRED, TERMINATED, SUPERSEDED]
+    ProjectState:
+      type: string
+      enum: [BRIEFED, ACCEPTED, PRODUCTION, PREVIEW, REVISION, APPROVED, LOCKED, DELIVERED]
+    ExclusiveState:
+      type: string
+      enum: [PENDING, VERIFIED, PROTECTED, RETIRED]
