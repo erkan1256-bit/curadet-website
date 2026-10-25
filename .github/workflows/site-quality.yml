@@ -9,6 +9,7 @@ on:
       - '**/*.svg'
       - '**/*.webmanifest'
       - 'CNAME'
+      - 'scripts/site_integrity.py'
       - '.github/workflows/site-quality.yml'
   push:
     branches: [main]
@@ -19,6 +20,7 @@ on:
       - '**/*.svg'
       - '**/*.webmanifest'
       - 'CNAME'
+      - 'scripts/site_integrity.py'
       - '.github/workflows/site-quality.yml'
 
 jobs:
