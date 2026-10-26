@@ -1,39 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 96" role="img" aria-labelledby="title desc">
   <title id="title">CURADET</title>
-  <desc id="desc">CURADET akış, müzik, haklar ve teknoloji kimliğini temsil eden şerit simgesi ve kelime işareti</desc>
-  <defs>
-    <linearGradient id="cyanBlue" x1="12" y1="78" x2="78" y2="18" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#20D5E5"/>
-      <stop offset=".52" stop-color="#16BFD5"/>
-      <stop offset="1" stop-color="#2563EB"/>
-    </linearGradient>
-    <linearGradient id="blueViolet" x1="30" y1="12" x2="82" y2="62" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#2563EB"/>
-      <stop offset=".55" stop-color="#5947E8"/>
-      <stop offset="1" stop-color="#7C3AED"/>
-    </linearGradient>
-    <linearGradient id="deepCyan" x1="22" y1="24" x2="72" y2="78" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#0F2432"/>
-      <stop offset=".48" stop-color="#123849"/>
-      <stop offset="1" stop-color="#14B8C4"/>
-    </linearGradient>
-    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#F3CB78"/>
-      <stop offset="1" stop-color="#D4A64A"/>
-    </linearGradient>
-  </defs>
-
-  <g transform="translate(7 7)">
-    <path d="M15 51C19 27 36 11 57 10C69 9 78 14 85 21C89 25 89 31 86 36C82 41 75 42 70 37C65 32 60 30 54 31C44 32 37 39 34 49C31 59 34 70 42 77C28 75 18 67 15 51Z" fill="url(#blueViolet)"/>
-    <path d="M11 52C15 67 27 78 42 80C55 82 67 77 75 67C78 63 77 57 73 54C69 51 63 51 60 55C55 61 49 63 43 62C34 60 29 54 28 45C27 37 30 30 36 24C22 28 13 38 11 52Z" fill="url(#cyanBlue)"/>
-    <path d="M23 24C31 15 42 10 54 10C47 15 42 22 40 29C37 38 39 48 45 55C52 63 63 67 74 65C68 75 57 81 45 81C31 81 19 73 13 61C20 64 27 64 33 61C39 59 44 55 47 49C40 45 35 40 32 34C29 30 26 27 23 24Z" fill="url(#deepCyan)" opacity=".98"/>
-    <path d="M13 53C18 44 26 38 36 36C43 35 50 37 56 42C61 46 66 49 71 49C76 49 81 47 85 43C84 52 80 60 73 66C64 73 53 76 42 73C29 70 19 63 13 53Z" fill="url(#cyanBlue)" opacity=".93"/>
-  </g>
-
+  <desc id="desc">CURADET wordmark with signature five-line A representing music, strings, sound and data</desc>
   <g font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="700">
-    <text x="108" y="52" fill="#F4F7F8" font-size="39" letter-spacing="6.2">CUR</text>
-    <text x="202" y="52" fill="url(#gold)" font-size="39" letter-spacing="0">A</text>
-    <text x="232" y="52" fill="#F4F7F8" font-size="39" letter-spacing="6.2">DET</text>
-    <text x="110" y="75" fill="#9CAAB1" font-size="8" letter-spacing="3.35">MUSIC · RIGHTS · TECHNOLOGY</text>
+    <text x="12" y="56" fill="#F4F7F8" font-size="48" letter-spacing="5">CUR</text>
+    <path d="M158 56L178 14H190L210 56H198L194 47H174L170 56H158ZM178 37H190L184 23L178 37Z" fill="#C8A46B"/>
+    <g stroke="#071014" stroke-width="2.4" stroke-linecap="round">
+      <path d="M178.5 31H189.5"/><path d="M176.8 34.5H191.2"/><path d="M175.2 38H192.8"/><path d="M173.7 41.5H194.3"/><path d="M172.2 45H195.8"/>
+    </g>
+    <text x="214" y="56" fill="#F4F7F8" font-size="48" letter-spacing="5">DET</text>
+    <text x="14" y="79" fill="#9CAAB1" font-size="8.5" font-weight="600" letter-spacing="3.45">MUSIC · RIGHTS · TECHNOLOGY</text>
   </g>
 </svg>
