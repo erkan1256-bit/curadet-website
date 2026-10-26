@@ -1,10 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 96" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 139" role="img" aria-labelledby="title desc" preserveAspectRatio="xMidYMid meet">
   <title id="title">CURADET</title>
-  <desc id="desc">CURADET wordmark with clean champagne-gold A and Music Rights Technology signature</desc>
-  <g font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="700">
-    <text x="12" y="56" fill="#F4F7F8" font-size="48" letter-spacing="5">CUR</text>
-    <path d="M158 56L178 14H190L210 56H198L194 47H174L170 56H158ZM178 37H190L184 23L178 37Z" fill="#C8A46B"/>
-    <text x="214" y="56" fill="#F4F7F8" font-size="48" letter-spacing="5">DET</text>
-    <text x="14" y="79" fill="#9CAAB1" font-size="8.5" font-weight="600" letter-spacing="3.45">MUSIC · RIGHTS · TECHNOLOGY</text>
-  </g>
+  <desc id="desc">Approved CURADET wordmark: silver-white CUR and DET with clean champagne-gold A</desc>
+  <image href="/curadet-logo-approved.webp" x="0" y="0" width="900" height="139" preserveAspectRatio="xMidYMid meet"/>
 </svg>
