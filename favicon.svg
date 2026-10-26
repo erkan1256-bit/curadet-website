@@ -1,22 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CURADET">
-  <defs>
-    <linearGradient id="a" x1="8" y1="56" x2="56" y2="8" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#20D5E5"/>
-      <stop offset=".55" stop-color="#16BFD5"/>
-      <stop offset="1" stop-color="#2563EB"/>
-    </linearGradient>
-    <linearGradient id="b" x1="20" y1="8" x2="56" y2="50" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#2563EB"/>
-      <stop offset="1" stop-color="#7C3AED"/>
-    </linearGradient>
-    <linearGradient id="c" x1="16" y1="16" x2="52" y2="56" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#0F2432"/>
-      <stop offset="1" stop-color="#14B8C4"/>
-    </linearGradient>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CURADET A">
   <rect width="64" height="64" rx="14" fill="#071014"/>
-  <path d="M12 38C14 22 25 11 39 10C47 10 53 13 57 18C59 21 59 25 56 28C53 31 49 31 46 28C43 25 40 24 36 24C29 25 25 30 23 36C21 43 23 49 28 54C19 52 13 46 12 38Z" fill="url(#b)"/>
-  <path d="M10 38C13 48 21 55 31 56C40 57 48 54 53 47C55 44 54 41 52 39C49 37 46 37 44 40C41 43 37 45 33 44C27 43 23 39 22 33C22 28 24 23 28 19C18 22 12 29 10 38Z" fill="url(#a)"/>
-  <path d="M18 20C23 14 31 10 39 10C34 14 31 18 30 23C28 29 29 35 33 40C38 45 45 48 52 47C48 54 41 57 33 57C24 57 16 52 12 44C17 46 21 46 25 44C29 42 32 39 34 35C29 32 26 29 24 25C22 23 20 21 18 20Z" fill="url(#c)"/>
-  <path d="M12 39C15 33 21 29 27 28C32 27 37 29 41 32C45 35 48 37 52 37C55 37 58 36 60 34C59 40 56 45 52 48C46 53 38 55 31 53C22 51 16 46 12 39Z" fill="url(#a)" opacity=".94"/>
+  <path d="M12 52L27 12H37L52 52H42L39 43H25L22 52H12ZM28 34H36L32 22L28 34Z" fill="#C8A46B"/>
+  <g stroke="#071014" stroke-width="2.2" stroke-linecap="round">
+    <path d="M27.8 30H36.2"/><path d="M26.8 33H37.2"/><path d="M25.8 36H38.2"/><path d="M24.8 39H39.2"/><path d="M24 42H40"/>
+  </g>
 </svg>
