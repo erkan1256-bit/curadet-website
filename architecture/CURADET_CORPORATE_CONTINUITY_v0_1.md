@@ -187,6 +187,30 @@ For every material CURADET task, “İğne deliğinden geçirmek” means the wo
 
 This principle is a discipline of rigor and perseverance, not a demand for impossible perfection. It must increase truth, reliability and usefulness without becoming an excuse for paralysis, endless analysis or unnecessary complexity.
 
+## CURADET — POST-TASK SELF-LOCK AND CONTINUITY RULE
+Every material CURADET action MUST end with an internal continuity lock before the task is considered complete.
+
+The executing unit must record, in the appropriate single source of truth:
+1. WHAT CHANGED — the exact delta implemented.
+2. SOURCE — files, assets, decisions and evidence used.
+3. LOCKED RESULT — decisions or outputs that are now accepted and must not be silently reopened.
+4. VERSION / IDENTIFIER — commit, file version, asset hash or equivalent traceable identifier where available.
+5. VERIFICATION LEVEL — created / tested / integration-tested / target-environment-tested / live-verified / accepted, without exaggeration.
+6. OPEN ITEMS — remaining defects, risks, uncertainties, blockers and Owner-only decisions.
+7. NEXT CONTINUATION POINT — the exact point from which the next CURADET task must continue.
+
+A later chat, task, unit, tool or model MUST read and inherit this recorded state before changing the same subject.
+
+The self-lock does NOT mean that every temporary experiment, failed attempt or draft becomes permanent. Only verified/accepted results are locked. Drafts, hypotheses, experiments and unresolved alternatives must be explicitly labeled as such.
+
+A lock also does NOT make an error permanent. If new evidence shows that a locked result is wrong, unsafe, obsolete or weaker than a superior route, the Constructive Challenge principle applies: return to the source, document the evidence, correct the result, retest it and create a new traceable version. Never silently overwrite institutional history.
+
+### Mandatory end-of-task question
+Before ending any material task, the executing unit must internally answer:
+**“Bu işlemden sonra CURADET neyi artık kesin biliyor, neyi kilitli kabul ediyor, ne açık kaldı ve bir sonraki çalışma tam olarak nereden devam edecek?”**
+
+If this answer is not recorded where future CURADET work can retrieve it, the material task is not institutionally complete.
+
 ## Owner burden rule
 The Owner is not the quality-control mechanism for forgotten context.
 The system must catch context conflicts before presenting work.
