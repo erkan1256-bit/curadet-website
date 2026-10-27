@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://curadet.com/schemas/music-analyzer-result-v0.1.json",
+  "title": "CURADET Music Analyzer Result",
+  "type": "object",
+  "required": ["analysis_id", "input", "versions", "scores", "hard_fail", "decision", "audit"],
+  "properties": {
+    "analysis_id": {"type": "string"},
+    "input": {
+      "type": "object",
+      "required": ["asset_id", "sha256", "source_type"],
+      "properties": {
+        "asset_id": {"type": "string"},
+        "sha256": {"type": "string", "pattern": "^[a-fA-F0-9]{64}$"},
+        "source_type": {"enum": ["suno", "ai_renderer", "curadet_renderer", "studio", "other"]},
+        "renderer": {"type": ["string", "null"]},
+        "language": {"type": ["string", "null"]},
+        "genre": {"type": ["string", "null"]}
+      }
+    },
+    "versions": {
+      "type": "object",
+      "required": ["analyzer", "criteria"],
+      "properties": {
+        "analyzer": {"type": "string"},
+        "criteria": {"type": "string"}
+      }
+    },
+    "scores": {
+      "type": "object",
+      "additionalProperties": {"type": "number", "minimum": 0, "maximum": 100},
+      "properties": {
+        "technical": {"type": "number"},
+        "rhythm_timing": {"type": "number"},
+        "melody_motif": {"type": "number"},
+        "tonality_makam": {"type": "number"},
+        "vocal": {"type": "number"},
+        "turkish_intelligibility": {"type": "number"},
+        "lyric_music_alignment": {"type": "number"},
+        "structure": {"type": "number"},
+        "energy_dynamics": {"type": "number"},
+        "hook_chorus": {"type": "number"},
+        "originality": {"type": "number"},
+        "realism": {"type": "number"},
+        "replay_value": {"type": "number"},
+        "shareable_segment": {"type": "number"},
+        "release_readiness": {"type": "number"}
+      }
+    },
+    "hard_fail": {
+      "type": "object",
+      "required": ["failed", "reasons"],
+      "properties": {
+        "failed": {"type": "boolean"},
+        "reasons": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "critical_segment": {
+      "type": ["object", "null"],
+      "properties": {
+        "start_seconds": {"type": "number", "minimum": 0},
+        "end_seconds": {"type": "number", "minimum": 0},
+        "reason": {"type": "string"}
+      }
+    },
+    "decision": {
+      "type": "object",
+      "required": ["status", "confidence", "reasons"],
+      "properties": {
+        "status": {"enum": ["eliminate", "finalist", "master_candidate", "owner_review"]},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "reasons": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "audit": {
+      "type": "object",
+      "required": ["created_at"],
+      "properties": {
+        "created_at": {"type": "string", "format": "date-time"},
+        "run_id": {"type": ["string", "null"]}
+      }
+    }
+  }
+}
