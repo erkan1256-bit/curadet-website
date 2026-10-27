@@ -1,0 +1,73 @@
+# CURADET CORPORATE CONTINUITY — v0.1
+
+Status: LOCKED EXECUTION RULE
+Owner: CURADET
+Coordination: 00 — CURADET MERKEZ
+
+## Fundamental rule
+A new chat, new task, new day, new tool, or new model MUST NOT reset CURADET.
+Every task is a continuation of the verified existing CURADET system.
+
+## Mandatory pre-execution gate
+Before creating, editing, publishing, coding, designing, or deciding anything, the executing unit MUST resolve these in order:
+
+1. LOCKED PRINCIPLES — applicable CURADET principles and non-negotiable rules.
+2. SINGLE SOURCE OF TRUTH — current source files, repository state, approved assets, versions and live state.
+3. LOCKED DECISIONS — prior approved/final decisions that cannot be reopened without Owner instruction.
+4. EXISTING ASSETS — reuse approved logo, brand identity, pages, modules, music assets, schemas and workflows instead of recreating them.
+5. UNIT BOUNDARY — identify the responsible CURADET unit and required cross-unit handoffs.
+6. CURRENT STATE — distinguish DONE / VERIFIED / OPEN / BLOCKED / OWNER REQUIRED.
+7. TASK DELTA — perform only what is new, missing, wrong or outdated.
+
+If any required source exists, memory or guesswork MUST NOT replace it.
+If a required source cannot be found, mark SOURCE MISSING and do not silently invent a replacement.
+
+## Mandatory execution chain
+PRINCIPLE → SOURCE → CURRENT STATE → DECISION → IMPLEMENTATION → TEST → VERIFICATION → RECORD → RESULT
+
+No task is COMPLETE unless the required verification link is complete.
+
+## Context-loss failure class
+`CONTEXT_BREAK` is a first-class CURADET failure.
+
+It occurs when work begins without checking applicable locked decisions, source-of-truth, approved assets, current implementation or unit boundaries.
+
+Examples:
+- redesigning an already approved logo instead of using the approved master;
+- creating a parallel page when an existing canonical module should be extended;
+- presenting CURADET publicly as an AI-music brand when the public product is CURADET / MUSIC and AI is an internal replaceable tool;
+- rebuilding a completed capability because its current source was not checked.
+
+A technically attractive output with CONTEXT_BREAK is NOT accepted as complete.
+
+## Institutional continuity
+CURADET must behave as one coordinated company, not isolated chats.
+Marketing, music production, R&D, rights, technology, commerce, finance, customer operations and future units use the same verified institutional facts and hand off through defined interfaces.
+
+New work MUST inherit relevant verified history automatically through CURADET MEMORY / source records before execution.
+
+## Public positioning guard
+Public-facing work must preserve the locked product direction:
+- CURADET is the visible brand/product.
+- MUSIC is the public category.
+- AI and renderers are internal/replaceable tools unless a specific disclosure is required.
+- Core music principle: human music, naturalness, emotion, musical soul and cultural/physical truth must not be forced into rigid technological templates.
+
+## Owner burden rule
+The Owner is not the quality-control mechanism for forgotten context.
+The system must catch context conflicts before presenting work.
+Owner is interrupted only for genuine authority decisions: irreversible publication/deletion, rights transfer, significant cost, critical security, contractual commitment, or unresolved high-risk ambiguity.
+
+## Audit requirement
+For every material task, preserve:
+- source(s) checked;
+- locked decisions applied;
+- files/assets reused;
+- delta implemented;
+- test/verification result;
+- version/commit/result identifier;
+- open risks or Owner decisions.
+
+## Non-negotiable sentence
+NEW TASK ≠ NEW CURADET.
+Every new task continues the verified CURADET that already exists.
