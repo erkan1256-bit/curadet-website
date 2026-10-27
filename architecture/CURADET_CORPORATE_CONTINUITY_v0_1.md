@@ -53,6 +53,23 @@ Public-facing work must preserve the locked product direction:
 - AI and renderers are internal/replaceable tools unless a specific disclosure is required.
 - Core music principle: human music, naturalness, emotion, musical soul and cultural/physical truth must not be forced into rigid technological templates.
 
+## Five senses + emotion principle
+CURADET's core human-experience principle is to address the whole person: the five senses and human emotion.
+
+Every applicable CURADET experience — music, visual identity, film/video, social content, website, mobile experience, live/physical experience, packaging and future products — MUST be designed by asking how it can create a coherent human experience across:
+- HEARING — music, voice, silence, spatial sound, rhythm, timbre and sonic identity;
+- SIGHT — image, light, movement, typography, color, composition and visual identity;
+- TOUCH — physical/digital interaction, texture, haptics, material feel and interface response where the medium permits;
+- SMELL — atmosphere, place, memory and physical brand experiences where the medium genuinely permits;
+- TASTE — hospitality, events, collaborations and physical experiences where the medium genuinely permits;
+- EMOTION — meaning, memory, anticipation, belonging, curiosity, excitement, calm, longing, joy and other authentic human feelings appropriate to the work.
+
+This principle does NOT require artificial use of all five senses in every medium. A digital post, song or website must not pretend to deliver smell or taste. Instead, each medium uses the senses it can genuinely reach and may evoke cross-sensory memory or imagination through honest artistic design.
+
+Technology remains an invisible enabler. The target is not sensory gimmicks; it is memorable, coherent, human experience.
+
+For public launches and social media, the creative question is therefore not merely “Does it look good?” or “Does it sound good?” but “What does the person see, hear, feel, remember and want to experience next?”
+
 ## Owner burden rule
 The Owner is not the quality-control mechanism for forgotten context.
 The system must catch context conflicts before presenting work.
