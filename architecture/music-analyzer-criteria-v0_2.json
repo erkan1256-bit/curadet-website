@@ -1,0 +1,58 @@
+{
+  "schema_version": "0.2",
+  "status": "LOCKED CRITERIA BASELINE",
+  "principle": "YAPAY ZEKA MUZIGI DEGIL, INSAN MUZIGI.",
+  "purpose": "CURADET Music Analyzer must judge whether a work succeeds as human music, not whether it is impressive as generated audio.",
+  "score_scale": {"min": 0, "max": 100},
+  "criteria": {
+    "technical": {"weight": 0.06},
+    "rhythm_timing": {"weight": 0.07},
+    "melody_motif": {"weight": 0.08},
+    "tonality_makam": {"weight": 0.06},
+    "vocal": {"weight": 0.08},
+    "turkish_intelligibility": {"weight": 0.05},
+    "lyric_music_alignment": {"weight": 0.07},
+    "structure": {"weight": 0.06},
+    "energy_dynamics": {"weight": 0.05},
+    "hook_chorus": {"weight": 0.07},
+    "originality": {"weight": 0.07},
+    "realism": {"weight": 0.08},
+    "replay_value": {"weight": 0.06},
+    "shareable_segment": {"weight": 0.04},
+    "release_readiness": {"weight": 0.10}
+  },
+  "human_music_gates": {
+    "minimum_realism": 65,
+    "minimum_vocal_if_present": 60,
+    "minimum_release_readiness_for_master_candidate": 75,
+    "minimum_weighted_score_for_finalist": 70,
+    "minimum_weighted_score_for_master_candidate": 80,
+    "hard_fail_conditions": [
+      "audible_generation_artifact_or_broken_audio",
+      "rhythmic_failure_that_breaks_musical_intent",
+      "physically_implausible_instrument_behavior_that_destroys_believability",
+      "severe_vocal_pronunciation_or_word_corruption",
+      "lyrics_and_music_materially_contradict_intended_emotion_without_artistic_reason",
+      "structural_failure_that_makes_the_work_feel_unfinished",
+      "rights_or_provenance_block_for_release"
+    ]
+  },
+  "invisible_orchestra_checks": [
+    "instrument_physicality",
+    "breath_and_articulation",
+    "human_microtiming",
+    "ensemble_interaction",
+    "controlled_imperfection",
+    "dynamic_cause_and_effect",
+    "source_blind_believability"
+  ],
+  "decision_rules": {
+    "hard_fail": "eliminate",
+    "score_below_finalist_threshold": "eliminate",
+    "score_at_or_above_finalist_threshold": "finalist",
+    "score_at_or_above_master_threshold_and_all_gates_pass": "master_candidate",
+    "uncertainty_or_conflicting_signals": "owner_review"
+  },
+  "calibration_rule": "Thresholds are provisional until calibrated against labeled human/Owner judgments. No autonomous public release may rely on these thresholds before calibration evidence exists.",
+  "audit_rule": "Every decision must preserve input hash, analyzer version, criteria version, component scores, hard-fail reasons, confidence, critical listening segment and decision reasons."
+}
