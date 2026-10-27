@@ -70,6 +70,42 @@ Technology remains an invisible enabler. The target is not sensory gimmicks; it 
 
 For public launches and social media, the creative question is therefore not merely “Does it look good?” or “Does it sound good?” but “What does the person see, hear, feel, remember and want to experience next?”
 
+## CURADET — Philosophical Visual Interpretation Principle
+This principle applies to CURADET MERKEZ and every unit involved in visual production.
+
+Song and work titles MUST NOT be illustrated merely by depicting the literal meaning of their words. Before visual production begins, the title must be considered deeply in terms of meaning, emotion, association and human condition.
+
+The purpose is not to show the word directly, but to make the thought and feeling it awakens in a person perceptible through an original visual language.
+
+Examples:
+- “Sevinçten uçuyorum” does not require an image of a flying person. Joy, lightness and exhilaration may be expressed through different scenes, movement or symbols.
+- “Hâlâ Ayakta” does not require an image of a standing person. Endurance, resistance, continuation or renewed strength may be interpreted through different objects, spaces and visual relationships.
+
+Each work MUST be interpreted independently. The same symbols, colors, scenes and ready-made visual formulas must not be repeated by habit. The first idea is not automatically accepted; alternative meanings and visual interpretations must be considered before selecting the expression most faithful to the work.
+
+For an album or single cover, the work title is the starting point for interpretation. The title must come alive visually and the cover should create emotion and curiosity at first encounter.
+
+### Fundamental sentence
+“Müzik asıl olandır; kapak görseli müziğin gölgesidir.”
+
+The visual must lead toward the music and MUST NOT overpower it. The approved CURADET logo must retain its approved form and be used as a measured signature, never as a visually intrusive element.
+
+The target is original, carefully crafted work that addresses human senses and emotions and avoids generic repetition. Artificiality, careless detail and ready-template appearance are unacceptable.
+
+### Mandatory visual validation before publication
+Before publication, verify:
+1. work/song title and spelling;
+2. philosophical and emotional relationship between title and visual narrative;
+3. avoidance of simplistic literal illustration unless literalism is intentionally the strongest interpretation;
+4. originality versus repeated symbols, colors, scenes and templates;
+5. typography, placement, hierarchy and composition;
+6. approved CURADET logo form, scale and restraint;
+7. visual detail integrity and absence of artificial/careless artifacts;
+8. compatibility with the Five Senses + Emotion Principle;
+9. whether the image directs attention toward the music rather than competing with it.
+
+A visual is NOT complete merely because it looks beautiful. It is complete only when its relationship to the work, the emotion it communicates and all publication details have been verified.
+
 ## Owner burden rule
 The Owner is not the quality-control mechanism for forgotten context.
 The system must catch context conflicts before presenting work.
