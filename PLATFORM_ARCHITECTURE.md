@@ -1,90 +1,204 @@
 # CURADET Platform Architecture
 
+## Status
+CORE / ACTIVE BUILD BASELINE
+
 ## Product Definition
-CURADET.com is the primary commercial and operational platform of CURADET, not merely a corporate website. Social channels drive discovery and traffic; CURADET.com owns the customer relationship, music discovery, private creation, licensing, contracting, payment, secure delivery and post-sale lifecycle.
+CURADET.com is the primary commercial, production, publishing and listening platform of CURADET, not merely a corporate website.
 
-## Core Product Flow
-Discovery → Account → Music World → Catalog / Private Brief → Rights Check → Contract → Payment → Exclusive Lock (if applicable) → Private Vault → WAV / Stems Delivery → License Record → Support / Revisions → Repeat Purchase.
+CURADET has two connected production sources:
+1. CURADET Originals / CURADET-owned or controlled productions.
+2. Music produced or co-produced by CURADET for outside artists, performers, writers, composers, producers, brands, institutions, film/TV, advertising, games, events and other projects.
 
-## Product Surfaces
-- Public corporate site
-- Music Pınarı catalog
-- Smart music search and filtering
-- Customer account and Music World
-- Private Vault
-- Private brief / custom work requests
-- Licensing selector
-- Checkout and payment status
-- Contract center
-- Orders, invoices and delivery history
-- Exclusive-lock registry
-- Support and revision history
-- B2B / Silent Client workspace
+CURADET is not a blind third-party catalog aggregator. External work enters production/catalog only through explicit rights, contract, contribution, provenance, metadata and publication authority gates.
 
-## Unit Ownership
-- 00 Merkez: platform governance, priorities, final operating rules.
-- 01 Global Music Watch: external market, technology, regulation and competitor signals.
-- 02 Pazarlama & Sosyal: acquisition, brand, campaign and social traffic.
-- 03 Müzik Üretim: production and final music quality.
-- 03A Deney Atölyesi: experiments and production R&D, never directly trusted as final production without QC.
-- 04 Haklar & Dağıtım: rights, contracts, provenance, licensing, exclusivity, metadata, distribution rules.
-- 05 Sync & B2B: enterprise, sync, large brands, Silent Client and negotiated licenses.
-- 06 Teknoloji: identity, API, payments, storage, security, delivery, observability and platform reliability.
+## North-Star Value Chain
+NEED / IDEA → BRIEF → CURADET PRODUCTION or CO-PRODUCTION → MUSIC ANALYSIS → HUMAN QC → MASTER → RIGHTS / CONTRACT / CONTRIBUTIONS / PROVENANCE → METADATA → CATALOG DECISION → CURADET PUBLICATION → LISTENING / SUBSCRIPTION / LICENSING → REVENUE / PERFORMANCE → LEARNING → NEW PRODUCTION.
 
-## Non-Negotiable Product Guarantees
-1. No final download without a valid entitlement.
-2. No active entitlement without successful payment or an approved zero-cost/enterprise contract.
-3. Exclusive works are removed from normal resale and entered into the protected-work registry.
-4. CURADET must not intentionally regenerate, license or sell the same or confusingly similar protected musical identity to another customer.
-5. Customer identity, briefs, unreleased music, voice files and purchase source remain confidential except where disclosure is required by law or explicitly authorized.
-6. Publicly delivered audio must not be forced to contain a visible or audible CURADET purchase marker.
-7. Every final delivered artifact is versioned, hashed and bound to its entitlement/license record.
-8. Sensitive files are never stored in a public web repository.
+## Bottom-Up Build Order
+The platform is built from infrastructure to user-facing experience. Upper layers must not pretend lower layers exist.
 
-## Architecture Layers
-### 1. Experience Layer
-Responsive web/PWA, accessibility, catalog player, smart search, Music World dashboard, private project rooms, contract and checkout interfaces.
+### L0 — Truth, Governance & Audit
+- Single Source of Truth and versioned architecture.
+- Immutable identifiers for users, works, recordings, releases, contracts, entitlements, orders and projects.
+- Audit events for material state changes.
+- Environment separation: local/dev/staging/production.
+- Secrets never stored in the public repository.
 
-### 2. Identity & Access
-Email/passkey/2FA capable identity, session management, RBAC/ABAC, Silent Client restricted access, device/session history and recovery flows.
+### L1 — Data & Domain Core
+Canonical entities:
+- User / Account / Role
+- Creator / Artist / Client / Organization
+- Work (composition/lyrics)
+- Recording / Master / Alternate / Stem
+- Release / Album / Collection / Playlist
+- CatalogEntry / Müzik Pınarı
+- ProductionProject / Brief / Revision
+- Contribution / Split / Provenance
+- RightsClaim / License / Territory / Media / Duration / Exclusivity
+- SubscriptionPlan / Subscription / Entitlement
+- Product / Price / Order / Payment / Refund / Invoice
+- PlaybackEvent / Favorite / LibraryItem / Queue / History
+- VisualDNA / MusicDNA / AnalysisResult
 
-### 3. Commerce
-Products, prices, taxes, invoices, payment intents, refunds, order state, enterprise billing and idempotent payment webhooks.
+Every media/catalog record must carry source class: `curadet_original`, `client_original`, `co_production`, or rights-verified `licensed_or_external` if later approved.
 
-### 4. Rights & Contracts
-License templates, signed contract versions, scope, territory, duration, media, exclusivity, ownership split, provenance and legal-audit history.
+### L2 — Identity, Security & Privacy
+- Secure account creation/sign-in.
+- Email/passkey/2FA capable architecture.
+- Session/device management and recovery.
+- RBAC/ABAC for Owner, staff, creators/clients, subscribers and B2B roles.
+- Rate limiting, abuse/fraud controls, audit logs.
+- Private customer briefs, unreleased audio and identity data never exposed through public storage.
 
-### 5. Music Asset Platform
-Masters, stems, instrumental, alternate mixes, previews, fingerprints, hashes, metadata and delivery packages.
+### L3 — Rights, Contracts & Provenance
+No publication, delivery or monetization without verified authority.
+- Ownership and contribution splits.
+- AI/human contribution/provenance records.
+- Contract versions and acceptance/signature evidence.
+- License scope: media, territory, duration, exclusivity, usage and restrictions.
+- Rights state machine and conflict/hold state.
+- Exclusive-lock registry and similarity/collision review for protected identities.
 
-### 6. Exclusive Lock
-Protected musical-identity fingerprint, similarity checks on new productions, collision review queue and non-resale enforcement.
+### L4 — Music Asset & Storage Layer
+- Original source, master, preview, instrumental, stems and alternates separated.
+- Content hash/version for final artifacts.
+- Private object storage for protected assets.
+- Signed expiring delivery links.
+- Public streaming derivative separated from downloadable master.
+- Backup/restore verification.
 
-### 7. Private Vault
-Encrypted object storage, signed expiring download links, per-file access policy, download audit, optional re-authentication before sensitive downloads.
+### L5 — Production Engine
+Brief → Accepted → Production → Analyzer → Human QC → Preview → Revision → Approval → Master → Rights/Metadata Gate → Catalog/Delivery.
 
-### 8. Production Workflow
-Brief → production → QC → rights clearance → customer preview → revision → approval → final master → delivery.
+Supports CURADET Originals and external client/co-production workflows without mixing ownership assumptions.
 
-### 9. Observability & Security
-Audit logs, security alerts, rate limits, fraud signals, backup/restore verification, deployment health, privacy-event logging and incident response.
+### L6 — Catalog & Publishing Core
+Müzik Pınarı is the single canonical catalog source.
+- Works, recordings, releases, albums and collections.
+- Publication state and availability windows.
+- Search/discovery metadata.
+- Credits, lyrics where authorized, artwork/Visual DNA.
+- Rights-aware visibility and regional/entitlement rules.
+- No parallel music catalog.
 
-## State Machines
+### L7 — Playback Platform
+- Persistent player independent from navigation routes.
+- Play/pause, seek, previous/next, volume, queue.
+- Now Playing and album/work context.
+- Playback authorization/entitlement checks where required.
+- Favorites, library and listening history.
+- Playback events designed for privacy-aware analytics.
+- Web/PWA first; architecture must allow later native apps.
+
+### L8 — Subscription & Commerce
+Subscription is part of the listening product, not only a payment page.
+- Plans/prices remain configurable; no unverified fixed price in core.
+- Subscription lifecycle: trial if approved, active, grace/past-due, cancelled, expired.
+- Entitlements separated from payment provider implementation.
+- Payment intents/webhooks must be idempotent.
+- Orders, invoices, refunds and enterprise billing.
+- Payment provider remains replaceable until separately verified and selected.
+
+### L9 — Licensing / Sync / B2B
+- Rights-eligible tracks expose a natural License/Sync path without disrupting listening.
+- Brief-based custom production.
+- Film/TV, advertising, trailer, game, brand, event and enterprise workflows.
+- B2C subscription and B2B licensing share verified rights/metadata sources but remain distinct user journeys.
+
+### L10 — Intelligence & Learning
+- Music Analyzer feeds QC and discovery, not noisy technical UI.
+- Music Brain supports production decisions.
+- Music/Emotion/Color/Visual/Motion DNA supports artwork and living interface.
+- Performance, listening, subscription and licensing outcomes feed controlled learning.
+- AI does not bypass human/rights/security gates.
+
+### L11 — Public Experience
+CURADET PUBLIC = living music platform, not slogan-heavy landing page.
+Primary surfaces:
+- Discover / Home
+- Search
+- Müzik Pınarı / Library
+- New Releases
+- Collections
+- Genres / Emotions / Worlds
+- Albums / Works / Projects
+- Now Playing / Queue
+- Favorites / History
+- Account / Subscription
+- License / Sync
+- Production request / project entry
+
+Music appears before corporate explanation. Large decorative slogans and manifesto copy do not dominate the platform UI.
+
+### L12 — Private Control Center
+Secure operational face for CURADET:
+- production pipeline
+- Analyzer/QC
+- masters/assets
+- rights/contracts/provenance/metadata
+- catalog/publication
+- subscriptions/entitlements/commerce
+- B2B/licensing
+- Visual DNA/social publishing
+- analytics/learning
+- system health/security/audit
+
+The Control Center is an interface to the core, not the core itself.
+
+## Core State Machines
+### Production Project
+BRIEFED → ACCEPTED → PRODUCTION → ANALYSIS_QC → PREVIEW → REVISION → APPROVED → MASTERED → RIGHTS_METADATA_GATE → CATALOG_OR_DELIVERY.
+
+### Catalog Publication
+DRAFT → QC_PASSED → RIGHTS_CLEARED → METADATA_READY → SCHEDULED → PUBLISHED → PAUSED/WITHDRAWN.
+
+### Subscription
+PENDING → ACTIVE → GRACE/PAST_DUE → CANCELLED/EXPIRED; restoration only through verified entitlement rules.
+
 ### Order
-DRAFT → AWAITING_CONTRACT → AWAITING_PAYMENT → PAID → IN_PRODUCTION / READY → DELIVERED → COMPLETED
-Exceptional: CANCELLED, REFUNDED, DISPUTED.
+DRAFT → AWAITING_CONTRACT → AWAITING_PAYMENT → PAID → IN_PRODUCTION/READY → DELIVERED → COMPLETED; exceptional CANCELLED/REFUNDED/DISPUTED.
 
 ### License
-DRAFT → APPROVED → ACTIVE → EXPIRED / TERMINATED / SUPERSEDED.
-
-### Private Project
-BRIEFED → ACCEPTED → PRODUCTION → PREVIEW → REVISION → APPROVED → LOCKED → DELIVERED.
+DRAFT → REVIEW → APPROVED → ACTIVE → EXPIRED/TERMINATED/SUPERSEDED.
 
 ### Exclusive Work
-PENDING → VERIFIED → PROTECTED → RETIRED only by authorized rights process.
+PENDING → VERIFIED → PROTECTED → RETIRED only through authorized rights process.
+
+## Non-Negotiable Guarantees
+1. No final protected download without valid entitlement/license.
+2. No paid entitlement without verified payment or approved zero-cost/enterprise authority.
+3. No publication without rights/provenance/metadata gate.
+4. CURADET production does not automatically mean CURADET owns all rights; ownership/splits are explicit per project.
+5. Exclusive protected works are removed from conflicting resale/use paths.
+6. Sensitive files and secrets never live in the public repository.
+7. Final artifacts are versioned/hashed and bound to their project/release/license records.
+8. Rejected experiments are not silently promoted to catalog/master/core truth.
+9. Public and private/admin security boundaries remain separate.
+10. No layer may claim completion without passing its own tests and lower-layer dependencies.
 
 ## Deployment Direction
-The existing GitHub Pages site remains the public presentation layer during transition. Authentication, payments, contracts, private media and entitlement checks must move to a secure server-side application/API before real customer data or payments are accepted.
+The existing GitHub Pages surface remains transitional public presentation only. Authentication, subscriptions/payments, contracts, private media, entitlements, protected streaming/delivery and operational data require a secure server-side application/API and private storage before real customer or payment data is accepted.
+
+Local/notebook infrastructure remains the preferred CURADET control/core direction; cloud services may be replaceable support layers for public access, scale, delivery, backup and payment integrations.
+
+## Build Gates
+Each layer passes: source verification → implementation → unit/integration tests → security/privacy checks → auditability → rollback/recovery where applicable → recorded version/commit.
+
+NO PASS → NO UPPER-LAYER CLAIM.
 
 ## Definition of Done
-The commercial platform is not complete until a real test customer can securely: create an account, sign in, select/request music, accept the correct contract, pay in a sandbox/approved production flow, receive the correct entitlement, download an authorized WAV through a private expiring link, see the license in Music World, and have the complete chain verifiable in audit logs.
+CURADET platform is not complete until real end-to-end test users can securely:
+1. create/sign into an account;
+2. discover and continuously play authorized CURADET catalog music;
+3. subscribe through a verified sandbox/production payment flow and receive correct entitlements;
+4. favorite/save/history/queue music under their account;
+5. request a new CURADET production or co-production;
+6. move an approved project through brief, production, QC, rights, metadata and delivery/publication;
+7. license an eligible work through the correct B2B flow;
+8. receive protected files only through authorized expiring delivery;
+9. see the correct records in their account/project area;
+10. allow CURADET operators to verify the complete chain in Control Center audit logs.
+
+## Active Continuation Point
+Build begins at L0/L1: verify existing backend/data structures against this domain model, preserve working code, remove only proven conflicts, then implement missing canonical entities and tests before moving upward.
