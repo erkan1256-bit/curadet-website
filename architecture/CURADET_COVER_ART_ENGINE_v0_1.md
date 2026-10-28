@@ -16,6 +16,22 @@ CURADET AI ORKESTRA EDER; COVER ART BRAIN GÖRSEL KARARI UZMANLAŞTIRIR; RENDERE
 MUSIC BRAIN / RENDER ENGINE ayrımının görsel karşılığı:
 CURADET AI → COVER ART BRAIN → IMAGE RENDERER(S) → VISUAL ANALYZER/QC → CURADET AI.
 
+## Görsel üretim yetkisi — bağlayıcı çekirdek kararı
+CURADET'in şarkı, albüm, katalog, sosyal medya, site ve yayın görsellerinin sanat kararının sahibi CURADET'tir. Dış görüntü modelleri, servisler veya üreticiler CURADET adına karar merkezi değildir; yalnızca değiştirilebilir üretim/render araçlarıdır.
+
+Görev ayrımı:
+- CURADET AI = kurumsal sanat yönetmeni ve orkestratör; bağlamı, kaynakları, marka kurallarını, hak durumunu ve yayın hedefini birleştirir.
+- Cover Art Brain = uzman görsel zekâ; brief, kavram, ikonografi, kompozisyon ve sanat yönünü geliştirir ve adayları puanlar.
+- Image Renderer/Model = yalnız görsel üretim icrasını yapar. Model değişebilir; CURADET'in karar mantığı değişmez.
+- Visual Analyzer/QC = klişe, tekrar, teknik kusur, kaynak/logo doğruluğu, tipografi, kompozisyon, eser bağı ve platform uygunluğunu denetler.
+- CURADET AI/COOS = başarısız çıktıyı reddeder; düzeltme/yeniden üretim döngüsünü yönetir; doğrulanmış sonucu kayıt ve yayın zincirine taşır.
+- Owner = kurumsal logo/ana kimlik, hak devri, kritik strateji ve geri döndürülemez yayın gibi Owner yetkisi gerektiren noktalarda son karar merciidir.
+
+Bağlayıcı ifade:
+**GÖRSELİN SAHİBİ CURADET. SANAT KARARINI CURADET VERİR. DIŞ AI SADECE FIRÇA / RENDER MOTORUDUR.**
+
+Bu nedenle kamuya dönük operasyon dili, belirli bir dış modelin CURADET'in görsellerinin sahibi veya sanat yönetmeni olduğu izlenimini oluşturmaz. Provenance kayıtlarında kullanılan renderer/model doğru biçimde kaydedilir; fakat kurumsal karar ve görsel sistem CURADET'te kalır.
+
 ## Zorunlu koordinasyon sözleşmesi
 Cover Art Engine her görevde CURADET AI'den doğrulanmış bir `cover_art_context` alır. Minimum alanlar:
 - work_id / album_id
@@ -130,7 +146,7 @@ Yayın sonrası performans verileri tek başına sanat kararını belirlemez. CT
 Her final için mümkün olduğunda renderer/model, kaynak referanslar, üretim/düzenleme tarihi, insan müdahalesi, lisans/ticari kullanım durumu ve final dosya hash'i kayıt altına alınır. Hak/provenance belirsizliği yayın kapısında görünür blok oluşturur.
 
 ## CURADET entegrasyonu
-COVER ART ENGINE, CURADET AI/COOS içinde uzman görsel üretim katmanıdır; ayrı karar merkezi değildir. CURADET_AI_CONTROL_CENTER_v0_1.md, CURADET_VISUAL_PRODUCTION_GATE_v1.md ve CURADET_SOCIAL_MUSIC_PUBLISHING_STANDARD_v1.md ile uyumlu çalışır. CURADET AI ve COOS iş akışı, Cover Art Engine'i yalnız doğrulanmış bağlamla çağırır ve sonuçlarını audit/manifest ile kabul eder.
+COVER ART ENGINE, CURADET AI/COOS içinde uzman görsel üretim katmanıdır; ayrı karar merkezi değildir. CURADET_AI_CONTROL_CENTER_v0_1.md, CURADET_VISUAL_PRODUCTION_GATE_v1.md, CURADET_SOURCE_FIDELITY_GATE_v1.py ve CURADET_SOCIAL_MUSIC_PUBLISHING_STANDARD_v1.md ile uyumlu çalışır. CURADET AI ve COOS iş akışı, Cover Art Engine'i yalnız doğrulanmış bağlamla çağırır ve sonuçlarını audit/manifest ile kabul eder.
 
 ## Geliştirme aşamaları
 P0: CURADET AI `cover_art_context/result` sözleşmesi + veri modeli + Cover Art Brief + kavram/anti-klişe puanlama + çıktı manifesti.
