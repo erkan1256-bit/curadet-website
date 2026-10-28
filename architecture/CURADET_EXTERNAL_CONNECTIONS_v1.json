@@ -1,0 +1,80 @@
+{
+  "schema": "CURADET_EXTERNAL_CONNECTIONS_v1",
+  "status": "LOCKED_VERIFIED_CONNECTION_REGISTRY",
+  "updated_at_local": "2026-10-28T23:21:00+03:00",
+  "owner": "CURADET",
+  "coordination": "00 — CURADET MERKEZ",
+  "principles": [
+    "NEW TASK ≠ NEW CURADET",
+    "Single Source of Truth",
+    "Do not claim a connection beyond its verified capability",
+    "Credentials, passwords, tokens and recovery secrets are never stored in this registry"
+  ],
+  "connections": {
+    "instagram": {
+      "account": "@curadet",
+      "access_path": "Opera Browser Connector",
+      "state": "VERIFIED_ACTIVE_SESSION",
+      "verified_capabilities": [
+        "read current Instagram web UI",
+        "navigate CURADET account",
+        "access New Post/Reels/Professional Dashboard/Story UI where exposed by the browser"
+      ],
+      "verification_evidence": "2026-10-28 live Opera browser session showed authenticated @curadet Instagram UI and profile link",
+      "limits": [
+        "CAPTCHA, password, verification code or platform-required physical confirmation requires Owner",
+        "publishing requires the correct verified media asset and final platform-side success verification"
+      ]
+    },
+    "suno": {
+      "account": "@curadet",
+      "display_name": "CURADET",
+      "access_path": "Opera Browser Connector",
+      "state": "VERIFIED_ACTIVE_SESSION",
+      "verified_capabilities": [
+        "access profile",
+        "access Create",
+        "access Studio",
+        "access Library",
+        "read songs/albums/playlists exposed in current web UI"
+      ],
+      "observed_state": {
+        "songs_shown": 585
+      },
+      "verification_evidence": "2026-10-28 live Opera browser session showed authenticated CURADET/@curadet Suno profile and creation/library navigation",
+      "limits": [
+        "no assumption of API access",
+        "destructive, paid, rights-changing or irreversible actions remain separately gated"
+      ]
+    },
+    "youtube": {
+      "channel_name": "CURADET",
+      "channel_id": "UCdgJqIeRz7hA4sAR2U_M45Q",
+      "access_path": "Metricool connected brand",
+      "state": "VERIFIED_CONNECTED_IN_METRICOOL",
+      "verified_capabilities": [
+        "connected YouTube network visible to CURADET Metricool brand",
+        "publishing/scheduling may be performed only when the required valid media and YouTube metadata are supplied and the action succeeds"
+      ],
+      "verification_evidence": "Metricool brand 7146790 previously returned YouTube network with channel ID UCdgJqIeRz7hA4sAR2U_M45Q",
+      "limits": [
+        "do not claim a publication until platform/tool success is verified",
+        "video publishing requires valid video media and required YouTube metadata"
+      ]
+    },
+    "website": {
+      "domain": "curadet.com",
+      "repository": "erkan1256-bit/curadet-website",
+      "state": "SOURCE_REPOSITORY_VERIFIED",
+      "canonical_music_page": "muzik-pinari.html",
+      "architecture": "one public CURADET site plus secure private CURADET Control Center",
+      "verification_evidence": "GitHub repository is the current institutional website source used by CURADET",
+      "limits": [
+        "live deployment state must be re-verified before claiming any new repository change is live",
+        "public masters/WAV/stems/project sources must not be exposed"
+      ]
+    }
+  },
+  "operational_chain": "SUNO/PRODUCTION → CURADET QUALITY/ANALYZER → RIGHTS/METADATA → WEBSITE/MÜZİK PINARI → INSTAGRAM/YOUTUBE → PERFORMANCE → LEARNING",
+  "next_continuation_point": "Use this registry as the source-of-truth for external connection routing; next implementation step is to bind the running CURADET core/orchestrator to this registry without storing credentials in code."
+}
