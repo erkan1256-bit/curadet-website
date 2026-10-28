@@ -5,101 +5,95 @@ Owner: CURADET
 Coordination: 00 — CURADET MERKEZ + CURADET AI
 
 ## Ana karar
-CURADET PUBLIC bir müzik platformudur; ancak genel amaçlı üçüncü taraf katalog toplayıcısı değildir. Platformun temel kataloğunu **CURADET'in kendi ürettiği, hak/provenance kontrolünden geçirdiği ve yayınladığı müzikler** oluşturur.
+CURADET PUBLIC bir müzik platformudur ve CURADET aynı zamanda bir müzik üretim ekosistemidir. Platform iki ana üretim kaynağını birlikte destekler:
+1. **CURADET'in kendi eserleri / kendi kataloğu**;
+2. **dışarıdan gelen sanatçı, yorumcu, söz yazarı, besteci, yapımcı, marka, kurum ve proje sahipleri için CURADET tarafından üretilen veya birlikte geliştirilen müzikler.**
+
+CURADET üçüncü taraf kataloglarını kör biçimde toplayan genel amaçlı bir agregatör değildir. Dışarıdan gelen kişi/kurumun mevcut eserini kabul etmek ile CURADET'in onlar için yeni müzik üretmesi farklı süreçlerdir. Her iki durumda da hak, sözleşme, katkı, provenance, metadata ve yayın yetkisi açıkça doğrulanmadan katalog/yayın yapılmaz.
 
 Ana değer zinciri:
-**CURADET ÜRETİR → ANALİZ EDER → SEÇER → MASTER/Hak/PROVENANCE KONTROLÜ → KATALOĞA ALIR → CURADET PLATFORMUNDA YAYINLAR → DİNLENİR → ABONELİK/GELİR → PERFORMANS VERİSİ → ÖĞRENME → YENİ ÜRETİM.**
+**İHTİYAÇ / FİKİR → CURADET ÜRETİMİ veya ORTAK ÜRETİM → ANALİZ → İNSAN QC → MASTER → HAK / SÖZLEŞME / KATKI / PROVENANCE → METADATA → KATALOĞA ALMA KARARI → CURADET PLATFORMUNDA YAYIN → DİNLEME / ABONELİK / LİSANSLAMA → GELİR / PERFORMANS → ÖĞRENME → YENİ ÜRETİM.**
 
-CURADET böylece yalnız bir web sitesi veya player değil; üretim, katalog, yayın, dinleme, abonelik, hak/lisanslama ve öğrenme döngüsünü kendi kontrol katmanında birleştiren dikey müzik ekosistemidir.
+## Müzik her yerde — üretim kapsamı
+CURADET yalnız kendi adı altında şarkı çıkaran bir yapı değildir. Müzik ihtiyacının bulunduğu alanlarda üretim yapabilecek bir müzik zekâsı, üretim ve hak yönetim sistemi olarak gelişir. Kapsam örnekleri:
+- CURADET Originals ve CURADET katalog eserleri;
+- bağımsız sanatçı / yorumcu için özgün eser ve prodüksiyon;
+- söz yazarı / besteci ile ortak geliştirme;
+- müşteri veya kurum için özel üretim;
+- film, dizi, reklam, fragman, oyun, marka, etkinlik ve kurumsal projeler için özgün müzik;
+- sync/B2B ihtiyaçları için brief tabanlı üretim;
+- uygun projelerde farklı dil, kültür, tür ve coğrafyalara yönelik üretim.
 
-## Katalog sahipliği ve yayın ilkesi
-- Ana katalog CURADET üretimlerinden oluşur.
-- Bir eser yayınlanmadan önce Music Analyzer/human QC, master, metadata, hak ve provenance kapılarından geçer.
-- Üretim dosyası otomatik olarak yayınlanmış eser sayılmaz.
-- Yayınlanabilir master ile deney/aday üretimler ayrıdır.
-- Müzik Pınarı platformun tek doğru katalog kaynağına evrilir; paralel katalog kurulmaz.
-- İleride üçüncü taraf sanatçı/içerik kabulü düşünülürse bu ayrı Owner kararı, hak modeli ve kalite kapısı gerektirir; mevcut çekirdek karar bunu varsaymaz.
+**MÜZİK NEREDE GEREKİYORSA CURADET ORADA ÜRETEBİLİR; ANCAK HER ÜRETİM AYNI HAK, KALİTE VE PROVENANCE KAPILARINDAN GEÇER.**
+
+## Katalog sınıfları ve sahiplik ayrımı
+Müzik Pınarı tek doğru katalog kaynağı olarak korunur fakat her kayıt kaynak ve hak sınıfını açıkça taşır. Minimum sınıflar:
+- `curadet_original`: CURADET'in kendi üretimi/kataloğu;
+- `client_original`: dış müşteri/sanatçı için CURADET tarafından üretilen eser;
+- `co_production`: CURADET + dış yaratıcı/kurum ortak üretimi;
+- `licensed_or_external`: ileride kabul edilirse hakları doğrulanmış dış kaynak eser.
+
+Bu sınıflar kullanıcıya teknik etiket olarak gösterilmek zorunda değildir; hak motoru, metadata, gelir paylaşımı, yayın ve lisanslama için iç sistemde zorunludur.
+
+Bir eserin CURADET tarafından üretilmiş olması master/yayın/telif haklarının otomatik olarak CURADET'e ait olduğu anlamına gelmez. Hak sahipliği ve gelir paylaşımı sözleşme/proje bazında açıkça kaydedilir.
+
+## Dışarıdan gelen üretim talebi
+Public platform yalnız dinleme yüzeyi değildir; uygun ayrı bir yol üzerinden dışarıdan üretim talebi/brief alınabilir. Dinleyici deneyimi ile profesyonel üretim talebi birbirine karıştırılmaz.
+
+Hedef akış:
+**BAŞVURU / BRIEF → İHTİYAÇ SINIFLANDIRMA → KAPSAM / HAK / BÜTÇE / TESLİM MODELİ → ÜRETİM → REVİZYON / QC → MASTER → SÖZLEŞME / HAK / METADATA → TESLİM ve/veya CURADET YAYINI → LİSANSLAMA / GELİR / RAPORLAMA.**
+
+Fiyatlandırma, komisyon, hak devri, gelir paylaşımı, revizyon sınırı ve yayın zorunluluğu tek tip varsayılmaz; ürün/hizmet modeli ve sözleşme sistemi ayrıca tasarlanıp doğrulanacaktır.
 
 ## Abonelik sistemi — ürün kararı
-CURADET platformunda kullanıcı hesabı ve abonelik sistemi kurulacaktır. Abonelik yalnız ödeme ekranı değildir; dinleme ürün mimarisinin parçasıdır.
+CURADET platformunda kullanıcı hesabı ve abonelik sistemi kurulacaktır. Abonelik dinleyici ürün mimarisinin parçasıdır; profesyonel müzik üretim hizmetiyle aynı ürün değildir.
 
 Hedef yetenekler:
-- kullanıcı hesabı / güvenli oturum;
-- ücretsiz erişim katmanı olup olmayacağı ayrıca iş modeli doğrulamasıyla kesinleştirilir;
+- güvenli hesap/oturum;
 - ücretli abonelik planı/planları;
-- abonelik durumu ve yetkilendirme;
-- ödeme sağlayıcısı entegrasyonu (sağlayıcı henüz kilitli değildir);
-- yenileme, iptal, başarısız ödeme ve erişim durumları;
-- kullanıcı kütüphanesi, favoriler ve dinleme geçmişi;
-- uygun olduğunda playlist/queue ve kişiselleştirilmiş keşif;
-- abonelik haklarının web ve ilerideki uygulama yüzlerinde ortak hesapla çalışabilmesi;
-- gelir, abonelik, churn/retention ve dinleme analitiğinin özel Control Center'da izlenmesi.
+- abonelik durumu ve entitlement;
+- ödeme sağlayıcısı entegrasyonu;
+- yenileme, iptal, başarısız ödeme;
+- favoriler, kullanıcı kütüphanesi, dinleme geçmişi;
+- queue/playlist ve ileride kişiselleştirilmiş keşif;
+- web ve ileride uygulamalarda ortak hesap;
+- gelir, abonelik, churn/retention ve dinleme analitiği.
 
-Fiyat, ücretsiz/ücretli katman sınırları, deneme süresi ve ödeme sağlayıcısı henüz bağlayıcı değildir; pazar, maliyet, vergi, ödeme altyapısı ve hak modeli doğrulanmadan çekirdeğe sabit rakam yazılmaz.
+Fiyat, ücretsiz katman, deneme süresi ve ödeme sağlayıcısı araştırma/doğrulama tamamlanmadan kilitlenmez.
 
-## Public platform bilgi mimarisi
-- Ana Sayfa / Keşfet
-- Ara
-- Müzik Pınarı / Kütüphane
-- Yeni Çıkanlar
-- Seçkiler
-- Türler / Duygular / Dünyalar
-- Albümler / Eserler / CURADET projeleri
-- Favoriler / kullanıcı kütüphanesi
-- Dinleme geçmişi
-- Queue / Now Playing
-- Hesap / Abonelik
-- Sync & Lisanslama
-- CURADET kurumsal bilgisi ikincil alanda
+## Public ürünün iki ana yolu
+### Dinleyici
+Keşfet → Ara → Müzik Pınarı → Yeni Çıkanlar → Seçkiler → Tür/Duygu/Dünya → Albüm/Eser → Now Playing → Favori/Kütüphane → Hesap/Abonelik.
 
-## Metin ve slogan disiplini
-Ana platform ekranlarında büyük sloganlar, manifesto paragrafları ve dekoratif pazarlama metinleri arayüzü işgal etmez. Metin; navigasyon, eser/album/proje bilgisi, arama, filtre, player, hesap/abonelik, hak/lisans ve gerekli bağlam için kullanılır. Büyük tipografi slogan olmak zorunda değildir; eser, albüm, seçki veya işlevsel başlık olabilir.
+### Üretim / Profesyonel
+Müzik Üretimi / Proje Talebi → Brief → proje türü → iletişim/hesap → teklif/sözleşme aşaması. Sync & Lisanslama da profesyonel yolun ayrı fakat bağlı bir parçasıdır.
 
-**ÖNCE MÜZİK. SONRA ARAYÜZ. EN SON KURUMSAL ANLATI.**
+Ana müzik deneyimi slogan ve satış metinleriyle boğulmaz. Profesyonel yol görünür fakat dinleme akışını baskılamaz.
 
-## Küresel müzik platformu benchmark ilkesi
-Spotify, Apple Music, TIDAL, Qobuz, SoundCloud, YouTube Music ve diğer güçlü müzik platformlarının güncel kullanıcı davranışları araştırılır; hiçbir platform görsel veya ürün olarak kopyalanmaz. Kalıcı olarak incelenecek davranışlar:
-- ana ekranda doğrudan müziğe erişim;
-- güçlü arama ve keşif;
-- albüm, eser, katalog ve seçki hiyerarşisi;
-- persistent mini-player + genişleyen Now Playing;
-- sayfa değişirken kesintisiz playback;
-- queue, favori/kütüphane ve dinleme geçmişi;
-- responsive/adaptive layout;
-- mobilde mini-player + ana navigasyon;
-- ses kalitesi, credits ve metadata'ya gerektiğinde erişim;
-- hesap, abonelik ve entitlement deneyiminin dinlemeyi bozmaması;
-- CURADET'e özgü lisans/sync yolunun doğal biçimde erişilebilir olması.
+## Player ve keşif
+Player route'lardan bağımsız yaşayan çekirdek ürün katmanıdır: persistent mini-player, full Now Playing, queue, eser/album bağlamı, uygun olduğunda lyrics/credits/metadata, favori/kütüphane ve kesintisiz playback.
 
-Benchmark davranış/kalite içindir; CURADET başka platformların layout'unu, marka kimliğini veya katalog modelini kopyalamaz.
-
-## Player çekirdeği
-Player dekoratif widget değildir. Route'lardan bağımsız yaşayan çekirdek ürün katmanıdır: persistent mini-player, full Now Playing, play/pause, ileri/geri, scrub, ses, queue, eser/album bağlamı, uygun olduğunda lyrics/credits/metadata, favori/kütüphane ve kesintisiz playback.
-
-## Keşif sistemi
-Keşif yalnız tür kartlarından oluşmaz. Kullanıcı CURADET kataloğuna yeni çıkan, editoryal seçki, tür, duygu, kültür/coğrafya, dönem, enstrümantal/vokal, benzer eser, proje ve dinleme geçmişi gibi kapılardan ulaşabilir. Music Analyzer verisi teknik gürültü olarak gösterilmez; keşif zekâsını besler.
+Keşif; yeni çıkan, editoryal seçki, tür, duygu, kültür/coğrafya, dönem, enstrümantal/vokal, benzer eser, proje ve dinleme geçmişi gibi kapılardan çalışır. Music Analyzer teknik gürültü olarak gösterilmez; keşif zekâsını besler.
 
 ## Living Music Interface
 CURADET kimliği sabittir; eserlerin Music/Color/Visual DNA'sı kontrollü atmosfer yaratabilir. Living Music Interface platform işlevinin yerine geçmez. Logo, navigasyon, player kullanılabilirliği, kontrast ve erişilebilirlik sabit kalır. Gösterişli equalizer/neon/AI klişesi varsayılan değildir.
 
 ## Teknoloji görünmez
-Public yüz AI gösterisi değildir. CURADET AI, Music Brain, Analyzer, Rights Engine, Cover Art Brain, Social Engine ve COOS arkada çalışır. Kullanıcı müziği ve platformu deneyimler.
+Public yüz AI gösterisi değildir. CURADET AI, Music Brain, Analyzer, Rights Engine, Cover Art Brain, Social Engine ve COOS arkada çalışır. Dinleyici müziği; sanatçı/müşteri ise üretim kalitesini ve hizmeti deneyimler.
 
-## Lisanslama farkı
-CURADET yalnız abonelikle dinleme ürünü değildir. Hakları uygun eserlerde eser/album/Now Playing bağlamından doğal bir `Lisansla / Sync` yolu bulunabilir. B2C abonelik ve B2B lisanslama aynı hak/metadata kaynağına bağlanır fakat kullanıcı akışları birbirine karıştırılmaz.
+## Hak ve gelir ayrımı
+B2C abonelik, B2B üretim, sync/lisanslama ve dış yaratıcılarla gelir paylaşımı aynı finansal işlem değildir. Her gelir akışı ayrı hak/sözleşme/raporlama mantığına bağlanır. Bir eserin platformda bulunması tek başına CURADET'e sınırsız lisanslama hakkı vermez.
 
 ## Özel Control Center
-PRIVATE CURADET CONTROL CENTER; üretim, Analyzer, master, hak/provenance/metadata, katalog-yayın durumu, Visual DNA, sosyal/yayın, kullanıcı/abonelik operasyonları, gelir ve dinleme analitiği, performans/öğrenme, sistem sağlığı ve audit yönetimini birleştirir. Public platform ile yönetim yüzü güvenlik açısından ayrıdır.
-
-## Tasarım bağımsızlığı
-Benchmarklardan davranış ve kalite öğrenilir; layout kopyalanmaz. CURADET'in arayüzü kendi katalog sahipliği, kendi üretim zinciri, abonelik modeli, lisanslama avantajı ve Music/Visual DNA'sı etrafında kurulur.
+PRIVATE CURADET CONTROL CENTER; kendi üretimleri ve dış projeleri ayrı kaynak/hak sınıflarıyla yönetir: brief/proje, üretim, Analyzer, master, katkıcılar, sözleşme/hak/provenance/metadata, katalog/yayın durumu, Visual DNA, sosyal/yayın, kullanıcı/abonelik, müşteri/proje operasyonları, gelir/royalty/lisans, performans/öğrenme, sistem sağlığı ve audit.
 
 ## Kalite kapısı
-Final platform minimum olarak gerçek katalog, arama/keşif, eser/album sayfası, persistent player, queue, hesap/oturum, abonelik entitlement mantığı, responsive/adaptive davranış, erişilebilirlik/kontrast, performans, playback devamlılığı, logo/kaynak doğruluğu, hak/provenance ve gerçek cihaz/tarayıcı testlerinden geçmelidir. Ödeme canlıya alınmadan önce güvenlik, vergi/faturalama ve sağlayıcı entegrasyonu ayrıca doğrulanır.
+Hiçbir iç veya dış üretim yalnız üretildi diye yayınlanmaz. Minimum zincir:
+**KAYNAK/BRIEF → ÜRETİM → ANALİZ → HUMAN QC → MASTER → HAK/SÖZLEŞME → PROVENANCE → METADATA → YAYIN YETKİSİ → KATALOG → PLATFORM.**
 
 **NO PASS → NO FINAL RELEASE.**
 
 ## Çekirdek özeti
-**CURADET = KENDİ MÜZİĞİNİ ÜRETEN + KENDİ KATALOĞUNU YAYINLAYAN + KENDİ DİNLEME PLATFORMUNU İŞLETEN + ABONELİK GELİRİ KURAN + HAK/LİSANSLAMA KATMANINI YÖNETEN MÜZİK EKOSİSTEMİ.**
+**CURADET = KENDİ MÜZİĞİNİ ÜRETEN + DIŞARIDAN GELEN SANATÇI/MÜŞTERİ/PROJELER İÇİN MÜZİK ÜRETEN + ORTAK ÜRETİM YAPABİLEN + HAKLARI AYRIŞTIRAN + KATALOĞUNU YAYINLAYAN + KENDİ DİNLEME/ABONELİK PLATFORMUNU İŞLETEN + SYNC/LİSANSLAMA VE GELİR KATMANINI YÖNETEN MÜZİK EKOSİSTEMİ.**
 
-**ÜRET → DOĞRULA → YAYINLA → DİNLET → ABONELİK → ÖLÇ → ÖĞREN → YENİDEN ÜRET.**
+**MÜZİK HER YERDE → CURADET ÜRETİR → HAKKI DOĞRULAR → YAYINLAR / TESLİM EDER → DİNLENİR / LİSANSLANIR → GELİR → ÖĞRENME → YENİ MÜZİK.**
