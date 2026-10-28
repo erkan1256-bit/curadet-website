@@ -9,13 +9,18 @@ Owner talimatı: CURADET kapsamında yapılan çalışmalar sırasında ortaya �
 
 Bu görev yeni bir sohbet veya yeni bir alt görev başladığında sıfırlanmaz.
 
+## Yanıt öncesi çekirdek güncelleme kuralı
+Owner'ın açık talimatı gereği, CURADET kapsamında bir kullanıcı mesajına cevap verilmeden önce o mesajın veya hemen önceki işlemin ortaya çıkardığı kalıcı ve doğrulanmış kurumsal öğrenme olup olmadığı kontrol edilir. Varsa önce uygun kurumsal çekirdek/SSOT kaynağı güncellenir, sürüm/hash/commit alınır ve geri okunarak doğrulanır; kullanıcıya cevap bundan sonra verilir.
+
+Bu kural `her mesajı çekirdeğe yaz` anlamına gelmez. Geçici sohbet, ham fikir, doğrulanmamış araştırma ve tek kullanımlık ayrıntılar çekirdeğe terfi ettirilmez. Ancak kalıcı hata dersi, bağlayıcı Owner talimatı, tekrar kullanılacak kalite kapısı veya mimari karar varsa yanıt öncesi terfi zorunludur.
+
 ## Temel kural
 ANLIK KAYIT ≠ KÖRÜ KÖRÜNE ÇEKİRDEĞE YAZMA.
 
 Her bilgi önce sınıflandırılır ve doğrulanır. Çekirdek; sohbet günlüğü, ham araştırma deposu veya geçici fikir çöplüğü değildir.
 
 ## Zorunlu akış
-İŞ / ARAŞTIRMA / ÖNERİ → SINIFLANDIR → KAYNAK DOĞRULA → ÇATIŞMA KONTROLÜ → KALICILIK / YENİDEN KULLANILABİLİRLİK TESTİ → UYGUN KATMANI GÜNCELLE → SÜRÜM / HASH / COMMIT → GERİ OKU / DOĞRULA → DEVAM NOKTASINI KAYDET.
+İŞ / ARAŞTIRMA / ÖNERİ → SINIFLANDIR → KAYNAK DOĞRULA → ÇATIŞMA KONTROLÜ → KALICILIK / YENİDEN KULLANILABİLİRLİK TESTİ → UYGUN KATMANI GÜNCELLE → SÜRÜM / HASH / COMMIT → GERİ OKU / DOĞRULA → DEVAM NOKTASINI KAYDET → KULLANICIYA CEVAP.
 
 ## Çekirdeğe terfi edecek bilgi
 Aşağıdakiler doğrulanmış ve kurumsal olarak kalıcıysa çekirdeğe/SSOT'a terfi edilir:
@@ -49,6 +54,19 @@ Asistanın her önerisi otomatik olarak bağlayıcı karar değildir.
 - Stratejik yön, önemli maliyet, hak devri, güvenlik yetkisi, geri döndürülemez yayın/silme veya Owner yetkisi gerektiren öneri Owner kararı olmadan bağlayıcı çekirdek kararı yapılamaz.
 - Owner açıkça kabul ettiği anda karar uygun kaynağa sürümlenir.
 
+## Tasarım bağımsızlığı — kalıcı hata dersi
+CURADET çekirdeğini korumak, mevcut bir CURADET web sayfasının layout'unu veya görsel kompozisyonunu kopyalamak anlamına gelmez.
+
+Owner `bağımsız`, `yeni`, `farklı`, `birkaç örnek` veya eşdeğer bir tasarım talebi verdiğinde:
+- mevcut sitenin hero yerleşimi, kart sistemi, navigasyon biçimi, renk dağılımı ve kompozisyonu varsayılan şablon olarak taşınmaz;
+- önce birbirinden yapısal olarak ayrışan tasarım aileleri oluşturulur;
+- alternatifler yalnız içerik/görsel değişimiyle değil bilgi mimarisi, kompozisyon, etkileşim, tipografi, ritim, boşluk, hareket ve keşif modeli açısından ayrışmalıdır;
+- CURADET'in bağlayıcı kimlik, kaynak, hak, erişilebilirlik, Music/Visual DNA ve kalite ilkeleri korunur;
+- reddedilmiş tasarımlar yeni üretime gizli referans/başlangıç noktası yapılmaz.
+
+**ÇEKİRDEĞİ KORU ≠ MEVCUT TASARIMI KOPYALA.**
+**BAĞIMSIZ TASARIM = AYNI İLKEYİ YENİ BİR GÖRSEL/ETKİLEŞİM MİMARİSİYLE ÇÖZMEK.**
+
 ## Çatışma kuralı
 Yeni bilgi eski kilitli kararla çatışırsa eski karar sessizce üzerine yazılmaz. Kaynaklar karşılaştırılır; yeni kanıt/Owner kararı belirtilir; eski kararın neden değiştiği audit izinde korunur; yeni sürüm oluşturulur.
 
@@ -66,4 +84,4 @@ ONE SOURCE > DUPLICATE SOURCES.
 PERMANENT KNOWLEDGE > CHAT NOISE.
 
 ## Son karar
-CURADET kapsamında anlamlı yeni bilgi bekletilmez; doğrulanır, sınıflandırılır ve doğru kurumsal katmana anlık olarak işlenir. Ancak çekirdek hiçbir zaman doğrulanmamış araştırma, geçici parametre, sır veya fikir çöplüğü ile kirletilmez.
+CURADET kapsamında anlamlı yeni bilgi bekletilmez; doğrulanır, sınıflandırılır ve doğru kurumsal katmana anlık olarak işlenir. Kalıcı ve doğrulanmış öğrenme varsa bu terfi kullanıcıya cevap verilmeden önce tamamlanır. Ancak çekirdek hiçbir zaman doğrulanmamış araştırma, geçici parametre, sır veya fikir çöplüğü ile kirletilmez.
