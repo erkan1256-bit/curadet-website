@@ -8,6 +8,32 @@ Coordination: 00 — CURADET MERKEZ
 A new chat, new task, new day, new tool, or new model MUST NOT reset CURADET.
 Every task is a continuation of the verified existing CURADET system.
 
+## CURADET — İŞE BAŞLAMADAN ÖNCE İLKELERİ OKUMA VE UYGULAMA İLKESİ
+
+Bu ilke CURADET MERKEZ ve bütün bağlı birimlerde uygulanır.
+
+Her işe başlamadan önce ilgili çalışma ilkeleri, son kesin kararlar, onaylı kaynaklar ve geçerli son dosya sürümü okunur ve kontrol edilir. Bu kontrol yapılmadan üretim, düzenleme, teslim veya yayın işlemine başlanmaz.
+
+### ZORUNLU ÇALIŞMA SIRASI
+
+1. **OKU:** Görevle ilgili ilkeleri, önceki kararları ve görev sınırlarını incele.
+2. **DOĞRULA:** Onaylı kaynakları ve geçerli son sürümü doğrula. Bir dosyanın erişilebilir olması veya adında “son” yazması, doğru sürüm olduğunu kanıtlamaz.
+3. **UYGULA:** Çalışmayı bu ilkelere ve kesinleşmiş kararlara uygun yürüt. Kullanıcı açıkça değiştirmedikçe onaylı kararları kendiliğinden değiştirme.
+4. **KONTROL ET:** Teslimden önce sonucu yeniden incele. Göreve göre eser adı, kültürel bağlam, görsel, onaylı logo, yazım, yerleşim, ses, süre ve bağlantıları kontrol et.
+5. **GERÇEĞİ BİLDİR:** Yapılan işi, kontrol edilen sonucu ve doğrulanamayan noktaları açıkça ayır. Yapılmamış işi yapılmış, doğrulanmamış yayını yayında gibi gösterme.
+
+Kaynak veya önceki karar bulunamıyorsa bunu açıkça belirt. Eksik bilgiyi tahminle doldurup kesinleşmiş kaynak yerine kullanma.
+
+Hata bulunursa kaynağına dön, düzelt ve yeniden doğrula. Öğrenilen dersi sonraki işlerde kullanılabilecek şekilde kaydet.
+
+### TEMEL KURAL
+
+**“Önce ilkeleri oku ve kaynağı doğrula; sonra işlemi yap; ardından sonucu doğrula.”**
+
+**“İlkeyi kabul etme; ilkeyi uygula. Uygulanmayan ilke kabul edilmiş sayılmaz.”**
+
+Bu yöntem hata riskini azaltır; hatasızlık garantisi yerine titiz uygulama ve sürekli doğrulama esas alınır.
+
 ## Mandatory pre-execution gate
 Before creating, editing, publishing, coding, designing, or deciding anything, the executing unit MUST resolve these in order:
 
