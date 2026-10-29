@@ -2,6 +2,18 @@ import type { AnalyzerVerdict, MusicDecision, RendererKind } from './music-brain
 
 export type LearningOutcome = 'accepted' | 'rejected' | 'revised' | 'human_review';
 
+export type MusicDecisionSnapshot = {
+  musicalIntent: string;
+  rhythmPlan?: string;
+  melodyPlan?: string;
+  harmonyOrMakamPlan?: string;
+  arrangementPlan?: string;
+  vocalPlan?: string;
+  instrumentationPlan?: string;
+  emotionalArc?: string;
+  constraints: string[];
+};
+
 export type MusicBrainLearningRecord = {
   learningId: string;
   projectId: string;
@@ -14,18 +26,22 @@ export type MusicBrainLearningRecord = {
   hardFailReasons: string[];
   corrections: string[];
   scores: Record<string, number>;
-  decisionSnapshot: Pick<MusicDecision,
-    | 'musicalIntent'
-    | 'rhythmPlan'
-    | 'melodyPlan'
-    | 'harmonyOrMakamPlan'
-    | 'arrangementPlan'
-    | 'vocalPlan'
-    | 'instrumentationPlan'
-    | 'emotionalArc'
-    | 'constraints'
-  >;
+  decisionSnapshot: MusicDecisionSnapshot;
 };
+
+function snapshotDecision(decision: MusicDecision): MusicDecisionSnapshot {
+  return {
+    musicalIntent: decision.musicalIntent,
+    ...(decision.rhythmPlan !== undefined ? { rhythmPlan: decision.rhythmPlan } : {}),
+    ...(decision.melodyPlan !== undefined ? { melodyPlan: decision.melodyPlan } : {}),
+    ...(decision.harmonyOrMakamPlan !== undefined ? { harmonyOrMakamPlan: decision.harmonyOrMakamPlan } : {}),
+    ...(decision.arrangementPlan !== undefined ? { arrangementPlan: decision.arrangementPlan } : {}),
+    ...(decision.vocalPlan !== undefined ? { vocalPlan: decision.vocalPlan } : {}),
+    ...(decision.instrumentationPlan !== undefined ? { instrumentationPlan: decision.instrumentationPlan } : {}),
+    ...(decision.emotionalArc !== undefined ? { emotionalArc: decision.emotionalArc } : {}),
+    constraints: [...decision.constraints]
+  };
+}
 
 export function buildLearningRecord(input: {
   learningId: string;
@@ -48,23 +64,13 @@ export function buildLearningRecord(input: {
     decisionId: decision.decisionId,
     renderId: input.renderId,
     renderer: input.renderer,
-    rendererModel: input.rendererModel,
+    ...(input.rendererModel !== undefined ? { rendererModel: input.rendererModel } : {}),
     createdAt: input.createdAt,
     outcome: input.outcome,
     hardFailReasons: [...verdict.hardFailReasons],
     corrections: [...verdict.corrections],
     scores: { ...verdict.scores },
-    decisionSnapshot: {
-      musicalIntent: decision.musicalIntent,
-      rhythmPlan: decision.rhythmPlan,
-      melodyPlan: decision.melodyPlan,
-      harmonyOrMakamPlan: decision.harmonyOrMakamPlan,
-      arrangementPlan: decision.arrangementPlan,
-      vocalPlan: decision.vocalPlan,
-      instrumentationPlan: decision.instrumentationPlan,
-      emotionalArc: decision.emotionalArc,
-      constraints: [...decision.constraints]
-    }
+    decisionSnapshot: snapshotDecision(decision)
   };
 }
 
