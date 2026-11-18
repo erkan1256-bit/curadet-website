@@ -1,11 +1,11 @@
 {
-  "name": "CURADET",
+  "name": "CURADET HOLDİNG",
   "short_name": "CURADET",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#080a0d",
   "theme_color": "#080a0d",
-  "description": "CURADET — müzik, teknoloji ve yaratıcı üretimi bir araya getiren bağımsız yapı.",
+  "description": "Teknoloji, kültür ve insanı buluşturan CURADET kurumsal internet sitesi.",
   "icons": [
     {
       "src": "/favicon.svg",
