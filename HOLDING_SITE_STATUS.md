@@ -24,3 +24,8 @@ Gerekirse önce eski yayın içeriğini doğrulayarak geri dön: @ için 185.199
 Müzik odaklı ana sayfa kurumsal HOLDİNG sitesine dönüştürüldü. Onaylı logo korundu; eski müzik fotoğrafları ana sayfadan kaldırıldı. Hakkımızda, projeler, yönetim, ilkeler, sosyal fayda ve iletişim sayfaları bulunur. Holding kuruluş hazırlığı açıkça belirtilir; tescil tamamlanmış sayılmaz.
 
 Yönetim paneli/veritabanı ve otomatik sunucu yedeği kurulmuş değildir. E-posta teslimatı bu geçişte test edilmedi; DNS kayıtları korundu. DNS önbellekleri nedeniyle bazı ziyaretçiler bir süre eski sunucuyu görebilir. Sonraki kod değişiklikleri GitHub'a kaydedilse bile VPS'ye ayrıca dağıtılmalıdır.
+
+## Premium ve geniş proje sunumu — 18 Kasım 2026
+Kurumsal ana sayfa özgün lacivert/altın editorial tasarımla yenilendi. Koç ve Tata, ardından kullanıcının isteğiyle Tesla, SpaceX ve xAI resmî siteleri incelendi. Açılış için orijinal SVG ufuk görseli ve teknoloji/ses alanları için CSS konsept görselleri oluşturuldu; başka markaların medya varlıkları kullanılmadı. Görseller ürün ekranı veya gerçek tesis iddiası taşımaz. Araştırma/geliştirme durumları ve şirket kuruluş hazırlığı korunur.
+
+Canlı VPS'ye yeni paket aktarıldı; önceki public dizini /opt/curadet-before-frontier-20261118 altında korundu. 21 HTML sayfasında yerel bağlantı kalite kontrolü başarılı. Canlı masaüstü görünümü, proje alanına geçiş ve 390px srcdoc önizlemesinde ana sayfa/proje bölümü ve menü doğrulandı; bu fiziksel telefon testi değildir. Mobil menü yüksekliği sorunu giderildi. Geçici QA dosyası kaldırıldı. Yeni SVG oklar font eksikliğini önler. Otomatik tam tarayıcı testi ve gerçek cihaz performans ölçümü yapılmadı.
