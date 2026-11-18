@@ -1,16 +1,26 @@
-# CURADET HOLDİNG web sitesi — 18 Kasım 2026
+# CURADET HOLDİNG — yayın durumu
 
-Kullanıcının talimatı: curadet.com üzerinde çalışan müzik odaklı ana siteyi HOLDİNG kurumsal sitesine dönüştür.
+Son doğrulama: 18 Kasım 2026, Türkiye saati.
 
-Kaynak: erkan1256-bit/curadet-website, başlangıç main bc6eb896adcdced63203af2055eec4e37d858d13. CNAME curadet.com; canlı sayfa kaynakla eşleşir. Alan adı GitHub Pages üzerinden sunulur; bu site için Wix ücretli paket gerekmez.
+## Güncel yayın
+Kurumsal site Spaceship Standard 1 VPS üzerinde bağımsız olarak yayımlanıyor. Sunucu curadet-holding, Ubuntu 24.04, genel IP 153.79.249.162. Yayındaki kaynak sürümü 2756793318a8d9b2cf74ed0f66dc72fdfd37ed8a. Kaynak /opt/curadet-source; taşınabilir yayın /opt/curadet-holding-release; 44 public dosya. Caddy Docker Compose ile çalışıyor ve yeniden başlatma politikası unless-stopped.
 
-Değişiklik: mevcut onaylı logo, görsel varlıklar, koyu sinematik ana sayfa ve dört kart düzeni korunarak kurumsal içerik, gezinme ve arama değiştirildi. Hakkımızda, proje rehberi, yönetim, ilkeler, sosyal fayda, iletişim ve güvenlik sayfaları eklendi/güncellendi. Kuruluş hazırlığı açıkça belirtildi. CNAME, DNS, e-posta, backend ve eski müzik dosyaları korunur; geçmiş Git üzerinden geri alınabilir.
+Kullanıcı root parolasını kendisi oluşturdu; parola kaynakta veya bu kayıtta tutulmaz. Standard 1 denemesi 25 Kasım 2026'da aylık 247,17 TL olarak yenilenecek; kullanıcı aylık planı onayladı. Ücretli AutoBackup seçilmedi.
 
-Sonraki nokta: yayın commit'i için GitHub Pages dağıtımı ve https://curadet.com üzerinde yeni HOLDİNG başlığını doğrula. Mobil menü, sayfa bağlantıları ve arama kontrol edilmeli. Kuruluş tescili ve ürünlerin ticari faaliyeti doğrulanmış değildir.
+## Doğrulananlar
+- Paket bütünlüğü kontrolü: 21 HTML sayfası kalite kontrolünden geçti; Caddy yapılandırması geçerli.
+- Sunucu yerel ön testi kurumsal ana sayfa başlığını döndürdü.
+- Let's Encrypt sertifikası başarıyla alındı; sertifika denetimi kapatılmadan doğrudan yeni IP üzerinden HTTPS /healthz yanıtı ok.
+- Normal DNS çözümlemesiyle https://curadet.com/ HTTP 200; uzak IP 153.79.249.162.
+- https://www.curadet.com/ HTTPS üzerinden https://curadet.com/ adresine yönleniyor; son yanıt HTTP 200.
+- Ayrı tarayıcı oturumunda canlı ana sayfa ve yeni soyut kurumsal görsel doğrulandı.
 
-## Kurumsal görsel dönüşüm — 18 Kasım 2026
-Kullanıcı mobil ekran görüntüsünde eski müzik görsellerinin kaldığını bildirdi. Kulaklıklı kişi, konser ve müzik kartı arka planları ana sayfadan kaldırıldı; beşli bağımsız çalışma düzenini temsil eden soyut kurumsal ağ, koyu lacivert/altın yüzeyler ve dört faaliyet alanına özgü vektör semboller eklendi. Onaylı logo korunur. Temsili ağ kurumsal merkez binası veya gerçek iştirak ağı iddiası değildir.
-Önceki yayın d45803f canlı doğrulandı; Site Quality Gate ve Pages dağıtımı başarılı. Yeni görsel sürümün canlı doğrulaması takip edilmelidir.
+## DNS ve geri dönüş
+Güncel: @ A 153.79.249.162; www CNAME curadet.com; TTL 30 dakika. Eski üç ek GitHub A kaydı kaldırıldı. İki MX, SPF, DKIM, otomatik yapılandırma SRV ve DMARC değiştirilmedi. Ad sunucuları launch1.spaceship.net ve launch2.spaceship.net olarak korundu.
 
-## Kendi sunucusunda yayın kararı
-Erkan GitHub Pages yerine kendi yönettiği sunucuyu açıkça seçti. deploy/self-hosted altında Caddy HTTPS yapılandırması, Docker Compose, başlatma ve geri dönüş yönergeleri; scripts/package_self_hosted.py altında public dosyalarla sınırlı taşınabilir paket üreticisi hazırlanır. Canlı DNS değiştirilmez. Sunucu/IP ve yetkili erişim eksik; gerçek sunucu/HTTPS testi yapılmadı. Yönetim paneli/veritabanı kurulmuş değildir.
+Gerekirse önce eski yayın içeriğini doğrulayarak geri dön: @ için 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153 A kayıtlarını; www için erkan1256-bit.github.io CNAME kaydını geri yükle. E-posta kayıtlarını değiştirme. Git geçmişi ve eski yayın korunur.
+
+## Kapsam
+Müzik odaklı ana sayfa kurumsal HOLDİNG sitesine dönüştürüldü. Onaylı logo korundu; eski müzik fotoğrafları ana sayfadan kaldırıldı. Hakkımızda, projeler, yönetim, ilkeler, sosyal fayda ve iletişim sayfaları bulunur. Holding kuruluş hazırlığı açıkça belirtilir; tescil tamamlanmış sayılmaz.
+
+Yönetim paneli/veritabanı ve otomatik sunucu yedeği kurulmuş değildir. E-posta teslimatı bu geçişte test edilmedi; DNS kayıtları korundu. DNS önbellekleri nedeniyle bazı ziyaretçiler bir süre eski sunucuyu görebilir. Sonraki kod değişiklikleri GitHub'a kaydedilse bile VPS'ye ayrıca dağıtılmalıdır.
