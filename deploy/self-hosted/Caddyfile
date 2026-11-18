@@ -1,0 +1,17 @@
+curadet.com {
+    root * /srv
+    encode zstd gzip
+    header {
+        X-Content-Type-Options nosniff
+        Referrer-Policy strict-origin-when-cross-origin
+        X-Frame-Options DENY
+        -Server
+    }
+    @pages path / /index.html *.html /site.webmanifest
+    header @pages Cache-Control "no-cache"
+    respond /healthz "ok" 200
+    file_server
+}
+www.curadet.com {
+    redir https://curadet.com{uri} permanent
+}

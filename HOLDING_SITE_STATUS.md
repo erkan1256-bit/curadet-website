@@ -11,3 +11,6 @@ Sonraki nokta: yayın commit'i için GitHub Pages dağıtımı ve https://curade
 ## Kurumsal görsel dönüşüm — 18 Kasım 2026
 Kullanıcı mobil ekran görüntüsünde eski müzik görsellerinin kaldığını bildirdi. Kulaklıklı kişi, konser ve müzik kartı arka planları ana sayfadan kaldırıldı; beşli bağımsız çalışma düzenini temsil eden soyut kurumsal ağ, koyu lacivert/altın yüzeyler ve dört faaliyet alanına özgü vektör semboller eklendi. Onaylı logo korunur. Temsili ağ kurumsal merkez binası veya gerçek iştirak ağı iddiası değildir.
 Önceki yayın d45803f canlı doğrulandı; Site Quality Gate ve Pages dağıtımı başarılı. Yeni görsel sürümün canlı doğrulaması takip edilmelidir.
+
+## Kendi sunucusunda yayın kararı
+Erkan GitHub Pages yerine kendi yönettiği sunucuyu açıkça seçti. deploy/self-hosted altında Caddy HTTPS yapılandırması, Docker Compose, başlatma ve geri dönüş yönergeleri; scripts/package_self_hosted.py altında public dosyalarla sınırlı taşınabilir paket üreticisi hazırlanır. Canlı DNS değiştirilmez. Sunucu/IP ve yetkili erişim eksik; gerçek sunucu/HTTPS testi yapılmadı. Yönetim paneli/veritabanı kurulmuş değildir.
