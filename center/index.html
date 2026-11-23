@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>CURADET Merkez — İletişim Merkezi Prototipi</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">CURADET MERKEZ</p>
+        <h1>İletişim Merkezi</h1>
+        <p class="muted">Geliştirme prototipi — canlı e-posta içeriği henüz bağlı değildir.</p>
+      </div>
+      <span class="badge badge-warn">PROTOTİP</span>
+    </header>
+
+    <section class="summary-grid" aria-label="Sistem özeti">
+      <article class="metric"><span>3</span><p>Ana posta kutusu</p></article>
+      <article class="metric"><span>3</span><p>Aktif alias</p></article>
+      <article class="metric"><span>3/3</span><p>2FA etkin</p></article>
+      <article class="metric"><span>PASS</span><p>SPF + DKIM</p></article>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow">POSTA KUTULARI</p>
+          <h2>Tek merkezden görünüm</h2>
+        </div>
+        <button id="refreshBtn" type="button">Durumu yenile</button>
+      </div>
+
+      <div class="mail-grid">
+        <article class="mailbox" data-box="info">
+          <div class="mailbox-head"><span class="dot"></span><h3>info@curadet.com</h3></div>
+          <p>Genel ve kurumsal iletişim</p>
+          <dl><div><dt>Alias</dt><dd>hello@, support@</dd></div><div><dt>2FA</dt><dd>Etkin</dd></div><div><dt>Canlı bağlantı</dt><dd>Henüz yok</dd></div></dl>
+          <button type="button" class="secondary" disabled>Gelen kutusunu aç</button>
+        </article>
+
+        <article class="mailbox" data-box="sync">
+          <div class="mailbox-head"><span class="dot"></span><h3>sync@curadet.com</h3></div>
+          <p>05 — Sync &amp; B2B</p>
+          <dl><div><dt>Alias</dt><dd>—</dd></div><div><dt>2FA</dt><dd>Etkin</dd></div><div><dt>Canlı bağlantı</dt><dd>Henüz yok</dd></div></dl>
+          <button type="button" class="secondary" disabled>Gelen kutusunu aç</button>
+        </article>
+
+        <article class="mailbox" data-box="rights">
+          <div class="mailbox-head"><span class="dot"></span><h3>rights@curadet.com</h3></div>
+          <p>04 — Haklar &amp; Lisanslama</p>
+          <dl><div><dt>Alias</dt><dd>licensing@</dd></div><div><dt>2FA</dt><dd>Etkin</dd></div><div><dt>Canlı bağlantı</dt><dd>Henüz yok</dd></div></dl>
+          <button type="button" class="secondary" disabled>Gelen kutusunu aç</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <p class="eyebrow">GÜVENLİ ENTEGRASYON</p>
+      <h2>Gerçek posta bağlantısı için sınırlar</h2>
+      <ul class="checklist">
+        <li>Parola, 2FA kodu ve backup kodları tarayıcıya veya GitHub'a yazılmaz.</li>
+        <li>Posta erişimi yalnız sunucu tarafı bağlantı katmanı üzerinden yapılır.</li>
+        <li>Merkez arayüzü kimlik doğrulaması olmadan canlı posta verisi göstermez.</li>
+        <li>04 ve 05 birimleri yalnız kendi görev alanlarındaki kutulara yetkili erişim alır.</li>
+        <li>Tüm önemli işlemler için erişim ve işlem kaydı tutulur.</li>
+      </ul>
+    </section>
+
+    <section class="panel status-panel">
+      <p class="eyebrow">UYGULAMA DURUMU</p>
+      <h2>Doğrulama seviyesi</h2>
+      <div class="status-row"><span>Arayüz iskeleti</span><strong class="ok">HAZIR</strong></div>
+      <div class="status-row"><span>Canlı Spacemail bağlantısı</span><strong class="pending">BEKLİYOR</strong></div>
+      <div class="status-row"><span>Merkez kullanıcı girişi / yetkilendirme</span><strong class="pending">BEKLİYOR</strong></div>
+      <div class="status-row"><span>Gerçek mesaj listeleme / yanıtlama</span><strong class="pending">BEKLİYOR</strong></div>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>

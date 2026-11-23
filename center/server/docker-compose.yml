@@ -1,0 +1,29 @@
+services:
+  curadet-center-mail-bridge:
+    build: .
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 8787
+      BIND_HOST: 0.0.0.0
+      CURADET_CENTER_TOKEN: ${CURADET_CENTER_TOKEN}
+      INFO_EMAIL: ${INFO_EMAIL}
+      INFO_PASSWORD: ${INFO_PASSWORD}
+      SYNC_EMAIL: ${SYNC_EMAIL}
+      SYNC_PASSWORD: ${SYNC_PASSWORD}
+      RIGHTS_EMAIL: ${RIGHTS_EMAIL}
+      RIGHTS_PASSWORD: ${RIGHTS_PASSWORD}
+      SPACEMAIL_IMAP_HOST: ${SPACEMAIL_IMAP_HOST:-mail.spacemail.com}
+      SPACEMAIL_IMAP_PORT: ${SPACEMAIL_IMAP_PORT:-993}
+      SPACEMAIL_SMTP_HOST: ${SPACEMAIL_SMTP_HOST:-mail.spacemail.com}
+      SPACEMAIL_SMTP_PORT: ${SPACEMAIL_SMTP_PORT:-465}
+      RATE_LIMIT_WINDOW_MS: ${RATE_LIMIT_WINDOW_MS:-60000}
+      RATE_LIMIT_MAX: ${RATE_LIMIT_MAX:-120}
+    ports:
+      - "127.0.0.1:8787:8787"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8787/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
