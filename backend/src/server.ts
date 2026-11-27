@@ -3,6 +3,12 @@ import { loadConfig } from './config.js';
 import { createDb } from './db.js';
 import { createCatalogReader, type CatalogReader } from './catalog.js';
 
+import type { IdentityProvider, IdentitySession } from './providers/contracts.js';
+import { createAccountStore } from './accounts.js';
+
+type AccountStore = ReturnType<typeof createAccountStore>;
+export type AuthServices = { identity: IdentityProvider; accounts: AccountStore };
+
 export type ReadinessProbe = () => Promise<void>;
 
 const serviceState = {
@@ -21,7 +27,7 @@ const serviceState = {
   }
 } as const;
 
-export function buildApp(checkDatabase?: ReadinessProbe, readCatalog?: CatalogReader) {
+export function buildApp(checkDatabase?: ReadinessProbe, readCatalog?: CatalogReader, auth?: AuthServices) {
   const app = Fastify({ logger: true, trustProxy: true, bodyLimit: 1_048_576 });
 
   app.get('/health', async () => ({ ok: true, service: serviceState.platform }));
@@ -79,10 +85,38 @@ export function buildApp(checkDatabase?: ReadinessProbe, readCatalog?: CatalogRe
     });
   });
 
-  app.get('/v1/me', async (_req, reply) => reply.code(501).send({
-    error: 'AUTH_BACKEND_NOT_CONNECTED',
-    message: 'Secure identity provider is not connected yet.'
-  }));
+  async function authenticate(header: string | undefined): Promise<IdentitySession | null> {
+    if (!auth || !header || !/^Bearer [^\s]+$/i.test(header)) return null;
+    const session = await auth.identity.verifyBearerToken(header.slice(7));
+    if (!session || !await auth.accounts.enabled(session.userId)) return null;
+    return session;
+  }
+
+  app.get('/v1/me', async (request, reply) => {
+    reply.header('Cache-Control', 'no-store');
+    if (!auth) return reply.code(501).send({ error: 'AUTH_BACKEND_NOT_CONNECTED' });
+    try {
+      const session = await authenticate(request.headers.authorization);
+      if (!session) return reply.code(401).send({ error: 'UNAUTHORIZED' });
+      return { userId: session.userId, assurance: session.assurance };
+    } catch {
+      return reply.code(503).send({ error: 'AUTH_UNAVAILABLE' });
+    }
+  });
+
+  app.get<{ Params: { id: string } }>('/v1/catalog/:id/access', async (request, reply) => {
+    reply.header('Cache-Control', 'no-store');
+    if (!auth) return reply.code(501).send({ error: 'AUTH_BACKEND_NOT_CONNECTED' });
+    try {
+      const session = await authenticate(request.headers.authorization);
+      if (!session) return reply.code(401).send({ error: 'UNAUTHORIZED' });
+      const allowed = await auth.accounts.canListen(session.userId, request.params.id);
+      if (!allowed) return reply.code(403).send({ error: 'ACCESS_DENIED' });
+      return { allowed: true };
+    } catch {
+      return reply.code(503).send({ error: 'ACCESS_UNAVAILABLE' });
+    }
+  });
 
   app.get('/v1/vault/assets/:assetId/download', async (_req, reply) => reply.code(501).send({
     error: 'SIGNED_DOWNLOAD_NOT_CONNECTED',
