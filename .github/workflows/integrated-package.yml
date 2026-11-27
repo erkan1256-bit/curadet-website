@@ -1,0 +1,20 @@
+name: Integrated Installation Package
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python scripts/site_integrity.py
+      - run: python scripts/package_integrated.py /tmp/CURADET-INTEGRATED.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CURADET-INTEGRATED
+          path: /tmp/CURADET-INTEGRATED.zip
