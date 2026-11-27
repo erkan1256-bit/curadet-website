@@ -1,3 +1,4 @@
+import { resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { createDb } from './db.js';
@@ -5,7 +6,7 @@ import { loadConfig } from './config.js';
 import type { Pool } from 'pg';
 
 export async function migrate(pool: Pool) {
-  const sql = await readFile(new URL('../../src/migrations/001_catalog.sql', import.meta.url), 'utf8');
+  const sql = await readFile(resolve(process.cwd(), 'src/migrations/001_catalog.sql'), 'utf8');
   const checksum = createHash('sha256').update(sql).digest('hex');
   const client = await pool.connect();
   try {
