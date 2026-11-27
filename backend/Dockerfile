@@ -12,6 +12,7 @@ COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/src/migrations ./src/migrations
 COPY package.json ./
+RUN chmod -R a+rX /app
 USER node
 EXPOSE 8080
 CMD ["node","dist/src/server.js"]
