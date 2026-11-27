@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { createDb } from '../../src/db.js';
 import { buildApp } from '../../src/server.js';
 import { createCatalogReader } from '../../src/catalog.js';
+import { createAccountStore } from '../../src/accounts.js';
 import { migrate } from '../../src/migrate.js';
 
 test('PostgreSQL migrations, persistence across pools and publication gate', { skip: !process.env.CURADET_TEST_DATABASE_URL }, async () => {
@@ -29,6 +30,17 @@ test('PostgreSQL migrations, persistence across pools and publication gate', { s
     assert.equal((await app.inject('/v1/catalog?limit=0')).statusCode, 400);
     const result = await reopened.query("SELECT work_title FROM public_catalog WHERE id='test-entry'");
     assert.equal(result.rows[0]?.work_title, 'Test work');
+    const accounts = createAccountStore(reopened);
+    await reopened.query("INSERT INTO accounts(id) VALUES ('test-user'),('other-user')");
+    await reopened.query("INSERT INTO subscriptions(id,user_id,plan_id,state,valid_until) VALUES ('test-sub','test-user','premium','active',now()+interval '1 hour')");
+    await reopened.query("INSERT INTO entitlement_grants(id,user_id,scope,authority,authority_id) VALUES ('test-grant','test-user','listen','subscription','test-sub')");
+    assert.equal(await accounts.canListen('test-user','test-entry'),true);
+    assert.equal(await accounts.canListen('other-user','test-entry'),false);
+    await reopened.query("UPDATE subscriptions SET state='cancelled' WHERE id='test-sub'");
+    assert.equal(await accounts.canListen('test-user','test-entry'),false);
+    await reopened.query("UPDATE subscriptions SET state='active' WHERE id='test-sub'");
+    await reopened.query("UPDATE accounts SET enabled=false WHERE id='test-user'");
+    assert.equal(await accounts.canListen('test-user','test-entry'),false);
     await reopened.query("UPDATE recordings SET rights_state='blocked' WHERE id='test-recording'");
     assert.equal((await reopened.query("SELECT * FROM public_catalog WHERE id='test-entry'")).rowCount, 0);
     assert.deepEqual((await app.inject('/v1/catalog')).json().items, []);
