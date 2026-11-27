@@ -14,6 +14,28 @@ jobs:
           python-version: '3.13'
       - run: python scripts/site_integrity.py
       - run: python scripts/package_integrated.py /tmp/CURADET-INTEGRATED.zip
+      - name: Install exact archived staging candidate
+        run: |
+          unzip -q /tmp/CURADET-INTEGRATED.zip -d /tmp/curadet-install
+          cd /tmp/curadet-install/CURADET/deploy/staging
+          export DB_PASSWORD="$(openssl rand -hex 24)"
+          docker compose config --quiet
+          docker compose up -d --build
+          for i in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:8088/ready; then break; fi
+            sleep 2
+          done
+          curl --fail --silent http://127.0.0.1:8088/health | python -c 'import json,sys; assert json.load(sys.stdin)["ok"]'
+          curl --fail --silent http://127.0.0.1:8088/ready | python -c 'import json,sys; assert json.load(sys.stdin)["ready"]'
+          curl --fail --silent http://127.0.0.1:8088/v1/catalog | python -c 'import json,sys; assert json.load(sys.stdin)["items"] == []'
+          curl --fail --silent http://127.0.0.1:8088/muzik-pinari.html | grep -q 'music-player'
+          test "$(curl --silent -o /dev/null -w '%{http_code}' -X POST http://127.0.0.1:8088/v1/catalog/test/playback)" = 503
+      - name: Tear down disposable CI installation
+        if: always()
+        run: |
+          cd /tmp/curadet-install/CURADET/deploy/staging
+          DB_PASSWORD=unused docker compose logs --tail=50 || true
+          DB_PASSWORD=unused docker compose down -v || true
       - uses: actions/upload-artifact@v4
         with:
           name: CURADET-INTEGRATED
