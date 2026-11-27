@@ -5,6 +5,7 @@ import { createCatalogReader, type CatalogReader } from './catalog.js';
 
 import type { IdentityProvider, IdentitySession } from './providers/contracts.js';
 import { createAccountStore } from './accounts.js';
+import type { PlaybackResolver } from './playback.js';
 import { identityFromEnv } from './providers/introspection.js';
 
 type AccountStore = ReturnType<typeof createAccountStore>;
@@ -28,7 +29,7 @@ const serviceState = {
   }
 } as const;
 
-export function buildApp(checkDatabase?: ReadinessProbe, readCatalog?: CatalogReader, auth?: AuthServices) {
+export function buildApp(checkDatabase?: ReadinessProbe, readCatalog?: CatalogReader, auth?: AuthServices, playback?: PlaybackResolver) {
   const app = Fastify({ logger: true, trustProxy: true, bodyLimit: 1_048_576 });
 
   app.get('/health', async () => ({ ok: true, service: serviceState.platform }));
@@ -116,6 +117,22 @@ export function buildApp(checkDatabase?: ReadinessProbe, readCatalog?: CatalogRe
       return { allowed: true };
     } catch {
       return reply.code(503).send({ error: 'ACCESS_UNAVAILABLE' });
+    }
+  });
+
+  app.post<{ Params: { id: string } }>('/v1/catalog/:id/playback', async (request, reply) => {
+    reply.header('Cache-Control', 'no-store');
+    if (!auth || !playback) return reply.code(503).send({ error: 'PLAYBACK_NOT_CONFIGURED' });
+    try {
+      const session = await authenticate(request.headers.authorization);
+      if (!session) return reply.code(401).send({ error: 'UNAUTHORIZED' });
+      if (!await auth.accounts.canListen(session.userId, request.params.id))
+        return reply.code(403).send({ error: 'ACCESS_DENIED' });
+      const grant = await playback(session.userId, request.params.id);
+      if (!grant) return reply.code(403).send({ error: 'PLAYBACK_DENIED' });
+      return grant;
+    } catch {
+      return reply.code(503).send({ error: 'PLAYBACK_UNAVAILABLE' });
     }
   });
 
