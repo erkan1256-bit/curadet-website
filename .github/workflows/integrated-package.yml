@@ -36,6 +36,21 @@ jobs:
           cd /tmp/curadet-install/CURADET/deploy/staging
           DB_PASSWORD=unused docker compose logs --tail=50 || true
           DB_PASSWORD=unused docker compose down -v || true
+      - name: Verify optional identity and object storage containers
+        run: |
+          cd /tmp/curadet-install/CURADET/deploy/staging
+          export DB_PASSWORD="$(openssl rand -hex 24)"
+          export KC_ADMIN_USER=ci-admin KC_ADMIN_PASSWORD="$(openssl rand -hex 24)" KC_PUBLIC_URL=http://127.0.0.1:8089
+          export S3_ADMIN_USER=ci-storage S3_ADMIN_PASSWORD="$(openssl rand -hex 24)"
+          trap 'docker compose -f compose.yml -f compose.providers.yml down -v' EXIT
+          docker compose -f compose.yml -f compose.providers.yml config --quiet
+          docker compose -f compose.yml -f compose.providers.yml up -d identity objectstore
+          for i in $(seq 1 90); do
+            if curl -fsS http://127.0.0.1:8089/realms/master/.well-known/openid-configuration >/dev/null && curl -fsS http://127.0.0.1:9000/minio/health/ready >/dev/null; then break; fi
+            sleep 2
+          done
+          curl -fsS http://127.0.0.1:8089/realms/master/.well-known/openid-configuration | python -c 'import json,sys; assert json.load(sys.stdin)["issuer"] == "http://127.0.0.1:8089/realms/master"'
+          curl -fsS http://127.0.0.1:9000/minio/health/ready
       - uses: actions/upload-artifact@v4
         with:
           name: CURADET-INTEGRATED
