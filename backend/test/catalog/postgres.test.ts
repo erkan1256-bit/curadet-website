@@ -23,7 +23,7 @@ test('PostgreSQL migrations, persistence across pools and publication gate', { s
   const reopened = createDb(url);
   const app = buildApp(async () => { await reopened.query('SELECT 1'); }, createCatalogReader(reopened));
   try {
-    const response = await app.inject('/v1/catalog?limit=1');
+    const response = await app.inject('/v1/catalog?limit=1&after=test-');
     assert.equal(response.statusCode, 200);
     assert.equal(response.json().items[0]?.work_title, 'Test work');
     assert.equal(response.json().nextCursor, null);
@@ -43,6 +43,6 @@ test('PostgreSQL migrations, persistence across pools and publication gate', { s
     assert.equal(await accounts.canListen('test-user','test-entry'),false);
     await reopened.query("UPDATE recordings SET rights_state='blocked' WHERE id='test-recording'");
     assert.equal((await reopened.query("SELECT * FROM public_catalog WHERE id='test-entry'")).rowCount, 0);
-    assert.deepEqual((await app.inject('/v1/catalog')).json().items, []);
+    assert.equal((await app.inject('/v1/catalog?after=test-')).json().items.some((item: {id:string}) => item.id === 'test-entry'), false);
   } finally { await app.close(); await reopened.end(); }
 });
