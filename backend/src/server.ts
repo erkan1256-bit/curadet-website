@@ -1,5 +1,8 @@
 import Fastify from 'fastify';
 import { loadConfig } from './config.js';
+import { createDb } from './db.js';
+
+export type ReadinessProbe = () => Promise<void>;
 
 const serviceState = {
   platform: 'curadet-platform-backend',
@@ -17,11 +20,19 @@ const serviceState = {
   }
 } as const;
 
-export function buildApp() {
+export function buildApp(checkDatabase?: ReadinessProbe) {
   const app = Fastify({ logger: true, trustProxy: true, bodyLimit: 1_048_576 });
 
   app.get('/health', async () => ({ ok: true, service: serviceState.platform }));
-  app.get('/ready', async (_req, reply) => reply.code(200).send({ ready: true }));
+  app.get('/ready', async (_req, reply) => {
+    if (!checkDatabase) return reply.code(503).send({ ready: false, database: 'NOT_CONFIGURED' });
+    try {
+      await checkDatabase();
+      return reply.code(200).send({ ready: true, database: 'REACHABLE' });
+    } catch {
+      return reply.code(503).send({ ready: false, database: 'UNAVAILABLE' });
+    }
+  });
 
   app.get('/v1/status', async () => ({
     ok: true,
@@ -66,6 +77,11 @@ export function buildApp() {
 const isMain = process.argv[1] && import.meta.url.endsWith(process.argv[1].replaceAll('\\', '/'));
 if (isMain) {
   const config = loadConfig();
-  const app = buildApp();
+  const db = config.databaseUrl ? createDb(config.databaseUrl) : undefined;
+  const app = buildApp(db ? async () => { await db.query('SELECT 1'); } : undefined);
+  if (db) {
+    db.on('error', () => app.log.error('Idle database connection failed'));
+    app.addHook('onClose', async () => { await db.end(); });
+  }
   await app.listen({ host: config.host, port: config.port });
 }
