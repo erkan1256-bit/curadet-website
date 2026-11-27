@@ -1,5 +1,19 @@
 import Fastify from 'fastify';
 import { loadConfig } from './config.js';
+import { createDb } from './db.js';
+import { createCatalogReader, type CatalogReader } from './catalog.js';
+
+import type { IdentityProvider, IdentitySession } from './providers/contracts.js';
+import { createAccountStore } from './accounts.js';
+import { createPlaybackResolver, type PlaybackResolver } from './playback.js';
+import { storageFromEnv } from './providers/media-gateway.js';
+import { createLibrary } from './library.js';
+import { identityFromEnv } from './providers/introspection.js';
+
+type AccountStore = ReturnType<typeof createAccountStore>;
+export type AuthServices = { identity: IdentityProvider; accounts: AccountStore };
+
+export type ReadinessProbe = () => Promise<void>;
 
 const serviceState = {
   platform: 'curadet-platform-backend',
@@ -17,11 +31,36 @@ const serviceState = {
   }
 } as const;
 
-export function buildApp() {
+export function buildApp(checkDatabase?: ReadinessProbe, readCatalog?: CatalogReader, auth?: AuthServices, playback?: PlaybackResolver, library?: ReturnType<typeof createLibrary>) {
   const app = Fastify({ logger: true, trustProxy: true, bodyLimit: 1_048_576 });
 
   app.get('/health', async () => ({ ok: true, service: serviceState.platform }));
-  app.get('/ready', async (_req, reply) => reply.code(200).send({ ready: true }));
+  app.get('/ready', async (_req, reply) => {
+    if (!checkDatabase) return reply.code(503).send({ ready: false, database: 'NOT_CONFIGURED' });
+    try {
+      await checkDatabase();
+      return reply.code(200).send({ ready: true, database: 'REACHABLE' });
+    } catch {
+      return reply.code(503).send({ ready: false, database: 'UNAVAILABLE' });
+    }
+  });
+
+  app.get('/v1/catalog', {
+    schema: { querystring: { type: 'object', additionalProperties: false, properties: {
+      limit: { type: 'integer', minimum: 1, maximum: 100, default: 20 },
+      after: { type: 'string', maxLength: 256, default: '' }
+    } } }
+  }, async (request, reply) => {
+    if (!readCatalog) return reply.code(503).send({ error: 'CATALOG_NOT_CONFIGURED' });
+    const { limit = 20, after = '' } = request.query as { limit?: number; after?: string };
+    try {
+      const rows = await readCatalog(limit + 1, after);
+      const items = rows.slice(0, limit);
+      return { items, nextCursor: rows.length > limit ? items.at(-1)?.id ?? null : null };
+    } catch {
+      return reply.code(503).send({ error: 'CATALOG_UNAVAILABLE' });
+    }
+  });
 
   app.get('/v1/status', async () => ({
     ok: true,
@@ -50,11 +89,84 @@ export function buildApp() {
     });
   });
 
-  app.get('/v1/me', async (_req, reply) => reply.code(501).send({
-    error: 'AUTH_BACKEND_NOT_CONNECTED',
-    message: 'Secure identity provider is not connected yet.'
-  }));
+  async function authenticate(header: string | undefined): Promise<IdentitySession | null> {
+    if (!auth || !header || !/^Bearer [^\s]+$/i.test(header)) return null;
+    const session = await auth.identity.verifyBearerToken(header.slice(7));
+    if (!session || !await auth.accounts.enabled(session.userId)) return null;
+    return session;
+  }
 
+  app.get('/v1/me', async (request, reply) => {
+    reply.header('Cache-Control', 'no-store');
+    if (!auth) return reply.code(501).send({ error: 'AUTH_BACKEND_NOT_CONNECTED' });
+    try {
+      const session = await authenticate(request.headers.authorization);
+      if (!session) return reply.code(401).send({ error: 'UNAUTHORIZED' });
+      return { userId: session.userId, assurance: session.assurance };
+    } catch {
+      return reply.code(503).send({ error: 'AUTH_UNAVAILABLE' });
+    }
+  });
+
+  app.get<{ Params: { id: string } }>('/v1/catalog/:id/access', async (request, reply) => {
+    reply.header('Cache-Control', 'no-store');
+    if (!auth) return reply.code(501).send({ error: 'AUTH_BACKEND_NOT_CONNECTED' });
+    try {
+      const session = await authenticate(request.headers.authorization);
+      if (!session) return reply.code(401).send({ error: 'UNAUTHORIZED' });
+      const allowed = await auth.accounts.canListen(session.userId, request.params.id);
+      if (!allowed) return reply.code(403).send({ error: 'ACCESS_DENIED' });
+      return { allowed: true };
+    } catch {
+      return reply.code(503).send({ error: 'ACCESS_UNAVAILABLE' });
+    }
+  });
+
+  app.post<{ Params: { id: string } }>('/v1/catalog/:id/playback', async (request, reply) => {
+    reply.header('Cache-Control', 'no-store');
+    if (!auth || !playback) return reply.code(503).send({ error: 'PLAYBACK_NOT_CONFIGURED' });
+    try {
+      const session = await authenticate(request.headers.authorization);
+      if (!session) return reply.code(401).send({ error: 'UNAUTHORIZED' });
+      if (!await auth.accounts.canListen(session.userId, request.params.id))
+        return reply.code(403).send({ error: 'ACCESS_DENIED' });
+      const grant = await playback(session.userId, request.params.id);
+      if (!grant) return reply.code(403).send({ error: 'PLAYBACK_DENIED' });
+      return grant;
+    } catch {
+      return reply.code(503).send({ error: 'PLAYBACK_UNAVAILABLE' });
+    }
+  });
+
+  app.get('/v1/library', async (request, reply) => {
+    reply.header('Cache-Control','no-store');
+    if(!auth||!library) return reply.code(503).send({error:'LIBRARY_NOT_CONFIGURED'});
+    try { const session=await authenticate(request.headers.authorization);
+      if(!session) return reply.code(401).send({error:'UNAUTHORIZED'});
+      return await library.list(session.userId);
+    } catch { return reply.code(503).send({error:'LIBRARY_UNAVAILABLE'}); }
+  });
+  app.put<{Params:{id:string};Body:{enabled:boolean}}>('/v1/library/favorites/:id', {
+    schema:{body:{type:'object',required:['enabled'],additionalProperties:false,properties:{enabled:{type:'boolean'}}}}
+  }, async (request,reply) => {
+    reply.header('Cache-Control','no-store');
+    if(!auth||!library) return reply.code(503).send({error:'LIBRARY_NOT_CONFIGURED'});
+    try { const session=await authenticate(request.headers.authorization);
+      if(!session) return reply.code(401).send({error:'UNAUTHORIZED'});
+      await library.favorite(session.userId,request.params.id,request.body.enabled);
+      return reply.code(204).send();
+    } catch { return reply.code(503).send({error:'LIBRARY_UNAVAILABLE'}); }
+  });
+  app.post<{Params:{id:string}}>('/v1/library/history/:id',async(request,reply)=>{
+    reply.header('Cache-Control','no-store');
+    if(!auth||!library) return reply.code(503).send({error:'LIBRARY_NOT_CONFIGURED'});
+    try {const session=await authenticate(request.headers.authorization);
+      if(!session) return reply.code(401).send({error:'UNAUTHORIZED'});
+      if(!await auth.accounts.canListen(session.userId,request.params.id)) return reply.code(403).send({error:'ACCESS_DENIED'});
+      await library.played(session.userId,request.params.id);
+      return reply.code(204).send();
+    }catch{return reply.code(503).send({error:'LIBRARY_UNAVAILABLE'});}
+  });
   app.get('/v1/vault/assets/:assetId/download', async (_req, reply) => reply.code(501).send({
     error: 'SIGNED_DOWNLOAD_NOT_CONNECTED',
     message: 'Private signed-download storage is not connected yet.'
@@ -66,6 +178,13 @@ export function buildApp() {
 const isMain = process.argv[1] && import.meta.url.endsWith(process.argv[1].replaceAll('\\', '/'));
 if (isMain) {
   const config = loadConfig();
-  const app = buildApp();
+  const db = config.databaseUrl ? createDb(config.databaseUrl) : undefined;
+  const identity = identityFromEnv();
+  const storage = storageFromEnv();
+  const app = buildApp(db ? async () => { await db.query('SELECT id FROM public_catalog LIMIT 1'); } : undefined, db ? createCatalogReader(db) : undefined, db && identity ? { identity, accounts: createAccountStore(db) } : undefined, db && storage ? createPlaybackResolver(db,storage) : undefined, db ? createLibrary(db) : undefined);
+  if (db) {
+    db.on('error', () => app.log.error('Idle database connection failed'));
+    app.addHook('onClose', async () => { await db.end(); });
+  }
   await app.listen({ host: config.host, port: config.port });
 }

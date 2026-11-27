@@ -1,0 +1,49 @@
+name: curadet-staging
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: curadet
+      POSTGRES_USER: curadet
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?required}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U curadet -d curadet"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+  migrate:
+    build: ../../backend
+    environment:
+      DATABASE_URL: postgresql://curadet:${DB_PASSWORD}@db:5432/curadet
+    command: ["node","dist/src/migrate.js"]
+    depends_on:
+      db:
+        condition: service_healthy
+  api:
+    build: ../../backend
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://curadet:${DB_PASSWORD}@db:5432/curadet
+      IDENTITY_INTROSPECTION_URL: ${IDENTITY_INTROSPECTION_URL:-}
+      IDENTITY_CLIENT_ID: ${IDENTITY_CLIENT_ID:-}
+      IDENTITY_CLIENT_SECRET: ${IDENTITY_CLIENT_SECRET:-}
+      IDENTITY_ISSUER: ${IDENTITY_ISSUER:-}
+      IDENTITY_AUDIENCE: ${IDENTITY_AUDIENCE:-}
+      MEDIA_SIGNER_URL: ${MEDIA_SIGNER_URL:-}
+      MEDIA_SIGNER_TOKEN: ${MEDIA_SIGNER_TOKEN:-}
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+  web:
+    image: caddy:2-alpine
+    ports:
+      - "127.0.0.1:8088:8080"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./public:/srv:ro
+    depends_on:
+      - api
+volumes:
+  pgdata:
