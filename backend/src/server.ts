@@ -5,6 +5,7 @@ import { createCatalogReader, type CatalogReader } from './catalog.js';
 
 import type { IdentityProvider, IdentitySession } from './providers/contracts.js';
 import { createAccountStore } from './accounts.js';
+import { identityFromEnv } from './providers/introspection.js';
 
 type AccountStore = ReturnType<typeof createAccountStore>;
 export type AuthServices = { identity: IdentityProvider; accounts: AccountStore };
@@ -130,7 +131,8 @@ const isMain = process.argv[1] && import.meta.url.endsWith(process.argv[1].repla
 if (isMain) {
   const config = loadConfig();
   const db = config.databaseUrl ? createDb(config.databaseUrl) : undefined;
-  const app = buildApp(db ? async () => { await db.query('SELECT id FROM public_catalog LIMIT 1'); } : undefined, db ? createCatalogReader(db) : undefined);
+  const identity = identityFromEnv();
+  const app = buildApp(db ? async () => { await db.query('SELECT id FROM public_catalog LIMIT 1'); } : undefined, db ? createCatalogReader(db) : undefined, db && identity ? { identity, accounts: createAccountStore(db) } : undefined);
   if (db) {
     db.on('error', () => app.log.error('Idle database connection failed'));
     app.addHook('onClose', async () => { await db.end(); });
