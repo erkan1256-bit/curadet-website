@@ -14,7 +14,11 @@ def build(out):
         with zipfile.ZipFile(archive) as source, zipfile.ZipFile(out,'x',zipfile.ZIP_DEFLATED) as target:
             manifest={}
             def add(path,data):
-                target.writestr('CURADET/'+path,data)
+                info=zipfile.ZipInfo('CURADET/'+path)
+                info.create_system=3
+                info.external_attr=0o100644 << 16
+                info.compress_type=zipfile.ZIP_DEFLATED
+                target.writestr(info,data)
                 manifest[path]=hashlib.sha256(data).hexdigest()
             for item in source.infolist():
                 if item.is_dir(): continue
@@ -25,7 +29,10 @@ def build(out):
                 add(p.as_posix(),data)
                 if (len(p.parts)==1 or p.parts[0]=='assets') and p.suffix in EXT:
                     add('deploy/staging/public/'+p.as_posix(),data)
-            target.writestr('CURADET/RELEASE.json',json.dumps({'commit':revision,'sha256':manifest,'status':'staging candidate; not live acceptance'},indent=2))
+            info=zipfile.ZipInfo('CURADET/RELEASE.json')
+            info.create_system=3
+            info.external_attr=0o100644 << 16
+            target.writestr(info,json.dumps({'commit':revision,'sha256':manifest,'status':'staging candidate; not live acceptance'},indent=2))
     with zipfile.ZipFile(out) as z:
         assert z.testzip() is None
         m=json.loads(z.read('CURADET/RELEASE.json'))
