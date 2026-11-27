@@ -6,7 +6,7 @@ import { loadConfig } from './config.js';
 import type { Pool } from 'pg';
 
 export async function migrate(pool: Pool) {
-  const migrations = ['001_catalog', '002_accounts', '003_subscription_events'];
+  const migrations = ['001_catalog', '002_accounts', '003_subscription_events', '004_listening_assets'];
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
