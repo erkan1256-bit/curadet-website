@@ -1,6 +1,7 @@
 import Fastify from 'fastify';
 import { loadConfig } from './config.js';
 import { createDb } from './db.js';
+import { createCatalogReader, type CatalogReader } from './catalog.js';
 
 export type ReadinessProbe = () => Promise<void>;
 
@@ -20,7 +21,7 @@ const serviceState = {
   }
 } as const;
 
-export function buildApp(checkDatabase?: ReadinessProbe) {
+export function buildApp(checkDatabase?: ReadinessProbe, readCatalog?: CatalogReader) {
   const app = Fastify({ logger: true, trustProxy: true, bodyLimit: 1_048_576 });
 
   app.get('/health', async () => ({ ok: true, service: serviceState.platform }));
@@ -31,6 +32,23 @@ export function buildApp(checkDatabase?: ReadinessProbe) {
       return reply.code(200).send({ ready: true, database: 'REACHABLE' });
     } catch {
       return reply.code(503).send({ ready: false, database: 'UNAVAILABLE' });
+    }
+  });
+
+  app.get('/v1/catalog', {
+    schema: { querystring: { type: 'object', additionalProperties: false, properties: {
+      limit: { type: 'integer', minimum: 1, maximum: 100, default: 20 },
+      after: { type: 'string', maxLength: 256, default: '' }
+    } } }
+  }, async (request, reply) => {
+    if (!readCatalog) return reply.code(503).send({ error: 'CATALOG_NOT_CONFIGURED' });
+    const { limit = 20, after = '' } = request.query as { limit?: number; after?: string };
+    try {
+      const rows = await readCatalog(limit + 1, after);
+      const items = rows.slice(0, limit);
+      return { items, nextCursor: rows.length > limit ? items.at(-1)?.id ?? null : null };
+    } catch {
+      return reply.code(503).send({ error: 'CATALOG_UNAVAILABLE' });
     }
   });
 
@@ -78,7 +96,7 @@ const isMain = process.argv[1] && import.meta.url.endsWith(process.argv[1].repla
 if (isMain) {
   const config = loadConfig();
   const db = config.databaseUrl ? createDb(config.databaseUrl) : undefined;
-  const app = buildApp(db ? async () => { await db.query('SELECT 1'); } : undefined);
+  const app = buildApp(db ? async () => { await db.query('SELECT id FROM public_catalog LIMIT 1'); } : undefined, db ? createCatalogReader(db) : undefined);
   if (db) {
     db.on('error', () => app.log.error('Idle database connection failed'));
     app.addHook('onClose', async () => { await db.end(); });
