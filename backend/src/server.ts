@@ -5,7 +5,9 @@ import { createCatalogReader, type CatalogReader } from './catalog.js';
 
 import type { IdentityProvider, IdentitySession } from './providers/contracts.js';
 import { createAccountStore } from './accounts.js';
-import type { PlaybackResolver } from './playback.js';
+import { createPlaybackResolver, type PlaybackResolver } from './playback.js';
+import { storageFromEnv } from './providers/media-gateway.js';
+import { createLibrary } from './library.js';
 import { identityFromEnv } from './providers/introspection.js';
 
 type AccountStore = ReturnType<typeof createAccountStore>;
@@ -29,7 +31,7 @@ const serviceState = {
   }
 } as const;
 
-export function buildApp(checkDatabase?: ReadinessProbe, readCatalog?: CatalogReader, auth?: AuthServices, playback?: PlaybackResolver) {
+export function buildApp(checkDatabase?: ReadinessProbe, readCatalog?: CatalogReader, auth?: AuthServices, playback?: PlaybackResolver, library?: ReturnType<typeof createLibrary>) {
   const app = Fastify({ logger: true, trustProxy: true, bodyLimit: 1_048_576 });
 
   app.get('/health', async () => ({ ok: true, service: serviceState.platform }));
@@ -136,6 +138,35 @@ export function buildApp(checkDatabase?: ReadinessProbe, readCatalog?: CatalogRe
     }
   });
 
+  app.get('/v1/library', async (request, reply) => {
+    reply.header('Cache-Control','no-store');
+    if(!auth||!library) return reply.code(503).send({error:'LIBRARY_NOT_CONFIGURED'});
+    try { const session=await authenticate(request.headers.authorization);
+      if(!session) return reply.code(401).send({error:'UNAUTHORIZED'});
+      return await library.list(session.userId);
+    } catch { return reply.code(503).send({error:'LIBRARY_UNAVAILABLE'}); }
+  });
+  app.put<{Params:{id:string};Body:{enabled:boolean}}>('/v1/library/favorites/:id', {
+    schema:{body:{type:'object',required:['enabled'],additionalProperties:false,properties:{enabled:{type:'boolean'}}}}
+  }, async (request,reply) => {
+    reply.header('Cache-Control','no-store');
+    if(!auth||!library) return reply.code(503).send({error:'LIBRARY_NOT_CONFIGURED'});
+    try { const session=await authenticate(request.headers.authorization);
+      if(!session) return reply.code(401).send({error:'UNAUTHORIZED'});
+      await library.favorite(session.userId,request.params.id,request.body.enabled);
+      return reply.code(204).send();
+    } catch { return reply.code(503).send({error:'LIBRARY_UNAVAILABLE'}); }
+  });
+  app.post<{Params:{id:string}}>('/v1/library/history/:id',async(request,reply)=>{
+    reply.header('Cache-Control','no-store');
+    if(!auth||!library) return reply.code(503).send({error:'LIBRARY_NOT_CONFIGURED'});
+    try {const session=await authenticate(request.headers.authorization);
+      if(!session) return reply.code(401).send({error:'UNAUTHORIZED'});
+      if(!await auth.accounts.canListen(session.userId,request.params.id)) return reply.code(403).send({error:'ACCESS_DENIED'});
+      await library.played(session.userId,request.params.id);
+      return reply.code(204).send();
+    }catch{return reply.code(503).send({error:'LIBRARY_UNAVAILABLE'});}
+  });
   app.get('/v1/vault/assets/:assetId/download', async (_req, reply) => reply.code(501).send({
     error: 'SIGNED_DOWNLOAD_NOT_CONNECTED',
     message: 'Private signed-download storage is not connected yet.'
@@ -149,7 +180,8 @@ if (isMain) {
   const config = loadConfig();
   const db = config.databaseUrl ? createDb(config.databaseUrl) : undefined;
   const identity = identityFromEnv();
-  const app = buildApp(db ? async () => { await db.query('SELECT id FROM public_catalog LIMIT 1'); } : undefined, db ? createCatalogReader(db) : undefined, db && identity ? { identity, accounts: createAccountStore(db) } : undefined);
+  const storage = storageFromEnv();
+  const app = buildApp(db ? async () => { await db.query('SELECT id FROM public_catalog LIMIT 1'); } : undefined, db ? createCatalogReader(db) : undefined, db && identity ? { identity, accounts: createAccountStore(db) } : undefined, db && storage ? createPlaybackResolver(db,storage) : undefined, db ? createLibrary(db) : undefined);
   if (db) {
     db.on('error', () => app.log.error('Idle database connection failed'));
     app.addHook('onClose', async () => { await db.end(); });
